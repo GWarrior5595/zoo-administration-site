@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query('SELECT * from < table name >', function(err, rows, fields) {
+connection.query('SELECT * from animals', function(err, rows, fields) {
   if (!err)
     console.log('The solution is: ', rows);
   else

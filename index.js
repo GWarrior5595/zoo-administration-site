@@ -22,7 +22,7 @@ app.set('view engine', 'html');
 //connection.connect();
 
 app.get('/', function(request, response) {
-  response.render('pages/index');
+  response.render('pages/login');
   // connection.query('SELECT * from animals', function(err, rows, fields) {
   //     if (err) {
   //       console.log('error: ', err);
