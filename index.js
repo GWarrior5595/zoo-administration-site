@@ -21,7 +21,7 @@ app.set('views', __dirname + '/views/pages');
 app.engine('html', engines.mustache);
 app.set('view engine', 'html');
 
-// configuration ===============================================================
+// configuration 
 mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -41,7 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./public/js/routes.js')(app, passport); // load our routes and pass in our app
+require('./server/routes.js')(app, passport); // load our routes and pass in our app
 
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'), function() {

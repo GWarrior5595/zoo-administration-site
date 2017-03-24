@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
 
   <body>
     Does this work? Homepage
+    <br />
+    <button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>
+    <input id="user-first-name" placeholder="Jennifer" type="text" />
+    <button type="button" class ="btn btn-default btn-sm" id="searchEmployees">Click me to display employee by first name!</button>
+    <p id="output"></p>
+    <br />
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
   </body>
 </html>
