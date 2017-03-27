@@ -35,7 +35,6 @@ getAllEmployees = function(callback) {
 module.exports.getAllEmployees = getAllEmployees
 
 getEmployeeByFirstName = function(data, callback) {
-  console.log(data);
   //we have to use backticks " ` " when wanting to select columns with spaces in their name
   var sql = "SELECT * from employee WHERE `First Name`=?"
   pool.getConnection(function(err, connection) {
