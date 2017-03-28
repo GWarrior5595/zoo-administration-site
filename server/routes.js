@@ -9,10 +9,33 @@ module.exports = function(app, passport) {
   });
 
   app.get('/index', isLoggedIn, function(req, res) {
-    res.statusCode = 307;
     res.render('index.html', {
         user : req.user
     });
+  });
+
+  app.get("/navbar", isLoggedIn, function(req, res){
+      res.render("navbar.html");
+  });
+
+  app.get("/page1", isLoggedIn, function(req,res){
+    res.render("page1.html");
+  });
+
+  app.get("/page2", isLoggedIn, function(req,res){
+    res.render("page2.html");
+  });
+
+  app.get("/page3", isLoggedIn, function(req,res){
+    res.render("page3.html");
+  });
+
+  app.get("/page4", isLoggedIn, function(req,res){
+    res.render("page4.html");
+  });
+
+  app.get("/page5", isLoggedIn, function(req,res){
+    res.render("page5.html");
   });
 
   // LOGOUT
@@ -68,7 +91,7 @@ module.exports = function(app, passport) {
   }));
 
   app.use(function (req, res, next) {
-    res.status(404).send("Sorry can't find that!")
+    res.status(404).send("Sorry! Page not found!")
   })
 };
 

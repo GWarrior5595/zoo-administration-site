@@ -2,6 +2,10 @@ $(document).ready(function(){
     // $("#allAnimals").click(function(){
     //     alert("allAnimals")
     // });
+    $(function(){
+        $("#nav-placeholder").load("/navbar"); 
+    });
+
 
     $('#allEmployees').click(function () {
         $.ajax({
