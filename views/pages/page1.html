@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/page1.js"></script>
     <script>
       $(function(){
           $("#nav-placeholder").load("/navbar"); 
@@ -20,7 +21,11 @@
           <div id="page-inner">
               <div class="row">
                   <div class="col-md-12">
-                    Page1.html
+                    <button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>
+                    <input id="user-first-name" placeholder="Jennifer" type="text" />
+                    <button type="button" class ="btn btn-default btn-sm" id="searchEmployees">Click me to display employee by first name!</button>
+                    <p id="output"></p> 
+                    <div id="showData"></div>
                   </div>
               </div>              
                 <hr />          
