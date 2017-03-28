@@ -41,8 +41,8 @@ body {
 .sidebar-collapse > .nav > li > a {
 	padding:15px 10px;
     color: #214761;
-font-weight: 900;
-font-size: 16px;
+    font-weight: 900;
+    font-size: 16px;
 }
 .sidebar-collapse > .nav > li {
 	border-bottom:1px solid #e1e1e1;
