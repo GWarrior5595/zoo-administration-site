@@ -19,13 +19,13 @@ var pool = mysql.createPool({
 // connection.end();
 
 getAllEmployees = function(callback) {
-  var sql = "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, employee.`Enclosure ID` as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, employee.`Hire Date`, employee.`Shifts`, employee.`Salary` "
+  var sql = "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, employee.`Enclosure ID` as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, date(employee.`Hire Date`) as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM heroku_db65f8e9326be4b.employee as employee, heroku_db65f8e9326be4b.shop as shop "
           + "WHERE employee.`Shop ID` = shop.`Shop ID` "
 
           + "UNION ALL "
 
-          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, employee.`Shop ID` as `Shop Name`, employee.`Job Desciption`, employee.`Hire Date`, employee.`Shifts`, employee.`Salary` "
+          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, employee.`Shop ID` as `Shop Name`, employee.`Job Desciption`, date(employee.`Hire Date`) as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM heroku_db65f8e9326be4b.enclosure as enclosure, heroku_db65f8e9326be4b.employee as employee "
           + "WHERE employee.`Enclosure ID` = enclosure.`Enclosure` "
 
