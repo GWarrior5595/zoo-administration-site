@@ -18,8 +18,8 @@ module.exports = function(app, passport) {
       res.render("navbar.html");
   });
 
-  app.get("/page1", isLoggedIn, function(req,res){
-    res.render("page1.html");
+  app.get("/employees", isLoggedIn, function(req,res){
+    res.render("employee.html");
   });
 
   app.get("/page2", isLoggedIn, function(req,res){

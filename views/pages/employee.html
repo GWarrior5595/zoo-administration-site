@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/page1.js"></script>
+    <script type="text/javascript" src="js/employee.js"></script>
+    <script src="js/jquery.tablesorter.min.js"></script>
     <script>
       $(function(){
           $("#nav-placeholder").load("/navbar"); 
@@ -12,6 +13,7 @@
     </script>
     
     <link href="stylesheets/main.css" rel="stylesheet" />
+    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -22,8 +24,8 @@
               <div class="row">
                   <div class="col-md-12">
                     <button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>
-                    <input id="user-first-name" placeholder="Jennifer" type="text" />
-                    <button type="button" class ="btn btn-default btn-sm" id="searchEmployees">Click me to display employee by first name!</button>
+                    <input id="user-first-name" placeholder="Search table by any column! (Jennifer)" type="text" size="40" />
+                    <!--<button type="button" class ="btn btn-default btn-sm" id="searchEmployees">Click me to display employee by first name with SQL!</button>-->
                     <p id="output"></p> 
                     <div id="showData"></div>
                   </div>
