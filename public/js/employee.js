@@ -23,7 +23,7 @@ function reloadEmployeeTable(){
           processData: false,
           complete: function (data) {
               CreateTableFromJSON(JSON.parse(data.responseText));
-              initializeInsertEmployeeFields();
+              initializeInsertEmployeeFields();             
           }
       });
 }
@@ -82,6 +82,8 @@ function initializeInsertEmployeeFields(){
             }
         }
     });
+    $("#dataTable").tablesorter();
+    
   }
 
 function CreateTableFromJSON(myData) {
@@ -135,9 +137,7 @@ function CreateTableFromJSON(myData) {
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
 
-    $("#dataTable").tablesorter({
-        sortList: [[0,0]],
-    });
+    $("#dataTable").tablesorter();
 }
 
 function insertEmployee(element){
@@ -239,4 +239,5 @@ $(document).ready(function(){
           }
       });
   });
+    $("#dataTable").tablesorter();  
 });
