@@ -64,6 +64,46 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/getIDAndNameOfShops', function(req, res){
+        db.getIDAndNameOfShops(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/addEmployee', function(req, res){
+        db.insertEmployee(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('User added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/deleteEmployee', function(req, res){
+        db.deleteEmployeeByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('User deleted from database');
+            }
+        });
+    });
+
+    app.post('/getIDAndNameOfEnclosures', function(req, res){
+        db.getIDAndNameOfEnclosures(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
 // AUTHENTICATE
   // show the login form
   app.get('/login', function(req, res) {

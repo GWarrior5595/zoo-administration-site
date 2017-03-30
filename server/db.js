@@ -59,3 +59,66 @@ getEmployeeByFirstName = function(data, callback) {
   });
 }
 module.exports.getEmployeeByFirstName = getEmployeeByFirstName
+
+getIDAndNameOfShops = function(data, callback){
+  var sql = "SELECT `Shop ID`, `Name`"
+          + "FROM heroku_db65f8e9326be4b.shop";
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getIDAndNameOfShops = getIDAndNameOfShops
+
+getIDAndNameOfEnclosures = function(data, callback){
+  var sql = "SELECT `Enclosure`, `Name`"
+          + "FROM heroku_db65f8e9326be4b.enclosure";
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getIDAndNameOfEnclosures = getIDAndNameOfEnclosures
+
+insertEmployee = function(data, callback){
+  var sql = "INSERT INTO employee SET ?"
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, data, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.insertEmployee = insertEmployee
+
+deleteEmployeeByID = function(data, callback){
+  var sql = "DELETE from employee "
+          + "WHERE `Employee ID` = ?"
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, data['Employee ID'], function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.deleteEmployeeByID = deleteEmployeeByID
