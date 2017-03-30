@@ -45,20 +45,20 @@ getAllEmployees = function(callback) {
 
 module.exports.getAllEmployees = getAllEmployees
 
-getEmployeeByFirstName = function(data, callback) {
+getEmployeeByID = function(data, callback) {
   //we have to use backticks " ` " when wanting to select columns with spaces in their name
-  var sql = "SELECT * from employee WHERE `First Name`=?"
+  var sql = "SELECT * from employee WHERE `Employee ID`=?"
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
-    connection.query(sql, data["First Name"], function(err, results) {
+    connection.query(sql, data["Employee ID"], function(err, results) {
       connection.release();
       if(err) { console.log(err); callback(true); return; }
       callback(false, results);
     });
   });
 }
-module.exports.getEmployeeByFirstName = getEmployeeByFirstName
+module.exports.getEmployeeByID = getEmployeeByID
 
 getIDAndNameOfShops = function(data, callback){
   var sql = "SELECT `Shop ID`, `Name`"
@@ -122,3 +122,21 @@ deleteEmployeeByID = function(data, callback){
 }
 
 module.exports.deleteEmployeeByID = deleteEmployeeByID
+
+editEmployeeByID = function(data, callback){
+  var sql = "DELETE from employee "
+          + "WHERE `Employee ID` = ?"
+
+  console.log(data);
+  // pool.getConnection(function(err, connection) {
+  //   if(err) { console.log(err); callback(true); return; }
+  //   // make the query
+  //   connection.query(sql, data['Employee ID'], function(err, results) {
+  //     connection.release();
+  //     if(err) { console.log(err); callback(true); return; }
+  //     callback(false, results);
+  //   });
+  // });
+}
+
+module.exports.editEmployeeByID = editEmployeeByID

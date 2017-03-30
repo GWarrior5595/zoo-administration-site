@@ -14,17 +14,17 @@ $(document).ready(function(){
         };
 
     var optionsSales = {
-        lineSmooth: false,
-        low: 0,
-        high: 1000,
-        showArea: true,
-        height: "245px",
-        axisX: {
-        showGrid: false,
+            lineSmooth: false,
+            low: 0,
+            high: 1000,
+            showArea: true,
+            height: "245px",
+            axisX: {
+            showGrid: false,
         },
-        lineSmooth: Chartist.Interpolation.simple({
-        divisor: 3
-        }),
+            lineSmooth: Chartist.Interpolation.simple({
+                divisor: 3
+            }),
         showLine: true,
         showPoint: false,
     };

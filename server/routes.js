@@ -54,8 +54,8 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/searchEmployees', function(req, res){
-        db.getEmployeeByFirstName(req.body, function(err, data){
+    app.post('/searchEmployeeByID', function(req, res){
+        db.getEmployeeByID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
                 //format data in here
@@ -80,6 +80,16 @@ module.exports = function(app, passport) {
             else{
                 //format data in here
                 res.send('User added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/editEmployeeByID', function(req, res){
+        db.editEmployeeByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                // res.send('User edited to database with ID: ' + data.insertId);
             }
         });
     });

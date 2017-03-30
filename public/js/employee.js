@@ -1,7 +1,7 @@
 function deleteEntry(element){
     var id = {
-          'Employee ID': element.id
-      };
+            'Employee ID': element.id
+        };
     $.ajax({
         url: "/deleteEmployee",
         type: "POST",
@@ -13,7 +13,37 @@ function deleteEntry(element){
             reloadEmployeeTable();        
         }
     });
-  }
+}
+
+//this will get called when the edit submit button is pressed.
+function editEmployeeEntry(){
+    //initialize variable based on input. Make if else statement if enclosure is null or shop ID is null
+    var info = {
+
+    }
+
+    //once have information, make ajax request to /editEmployeeByID
+    //then reload the html table like before
+}
+
+function initializeEditEntry(element){
+    var id = {
+          'Employee ID': element.id
+      };
+    $.ajax({
+        url: "/searchEmployeeByID",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(id),
+        complete: function (data) {
+            var employeeInfo = data.responseText;
+
+            //insert employee info into inputs so user can edit.
+
+        }
+    });
+}
 
 function reloadEmployeeTable(){
     $.ajax({
@@ -29,9 +59,8 @@ function reloadEmployeeTable(){
 }
 
 function initializeInsertEmployeeFields(){
-    var shopsData;
     var divContainer = document.getElementById("showData");      
-    divContainer.innerHTML += "<h3>Add New Employee</h3><br/><form id='submit' method='post' action='/addEmployee'><input type='text' name='first' id='firstNameEntry' placeholder='First Name'><input type='text' id='lastNameEntry' name='last' placeholder='Last Name'><input type='text' id='jobDescriptionEntry' name='job-description' placeholder='Job Description'><input type='text' id='shiftEntry' name='shift' placeholder='Shifts'><input type='number' id='salaryEntry' name='salary' placeholder='Salary'>"
+    divContainer.innerHTML += "<h3 id='addEmployee'>Add New Employee</h3><br/><form id='submit' method='post' action='/addEmployee'><input type='text' name='first' id='firstNameEntry' placeholder='First Name'><input type='text' id='lastNameEntry' name='last' placeholder='Last Name'><input type='text' id='jobDescriptionEntry' name='job-description' placeholder='Job Description'><input type='text' id='shiftEntry' name='shift' placeholder='Shifts'><input type='number' id='salaryEntry' name='salary' placeholder='Salary'>"
     //<input type='text' name='hiredate' placeholder='Hire-Date (YYYY-MM-DD)'>
     divContainer.innerHTML += "What Shop do they work at?  <select id='shop'></select></br>";
     divContainer.innerHTML += "What Enclosure do they work at?  <select id='enclosure'></select><br/>";        
@@ -43,7 +72,7 @@ function initializeInsertEmployeeFields(){
         contentType: "application/json",
         processData: false,
         complete: function (data) {
-            shopsData = JSON.parse(data.responseText);
+            var shopsData = JSON.parse(data.responseText);
 
             var sel = document.getElementById('shop');
             var optnull = document.createElement('option');
@@ -96,7 +125,7 @@ function CreateTableFromJSON(myData) {
             }
         }
     }
-    col.push("Delete")
+    col.push("Actions")
 
     // CREATE DYNAMIC TABLE.
     var table = document.createElement("table");
@@ -128,8 +157,10 @@ function CreateTableFromJSON(myData) {
         }
         var rowID = myData[i][col[0]];
         var tabcelldelete = tr.insertCell(-1);
+        var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
         tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEntry(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        tabcelledit.innerHTML = "<span id='" + rowID +"' onclick='initializeEditEntry(this)' class='table-edit glyphicon glyphicon-edit'></span>"        
     }
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
@@ -170,7 +201,20 @@ function insertEmployee(element){
             'Salary': $("#salaryEntry").val()
         };
     }
-    else {
+    else if (enclosure.options[enclosure.selectedIndex].id != '' && shop.options[shop.selectedIndex].id != ''){
+        entry = {
+            'Zoo ID': 1,
+            'First Name': $("#firstNameEntry").val(),
+            'Last Name': $("#lastNameEntry").val(),
+            'Shop ID': shop.options[shop.selectedIndex].id,            
+            'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+            'Job Desciption': $("#jobDescriptionEntry").val(),
+            'Hire Date': today,
+            'Shifts': $("#shiftEntry").val(),
+            'Salary': $("#salaryEntry").val()
+        };
+    }
+    else{
         entry = {
             'Zoo ID': 1,
             'First Name': $("#firstNameEntry").val(),
@@ -194,6 +238,7 @@ function insertEmployee(element){
             reloadEmployeeTable();
         }
     });
+    document.getElementById('topPage').scrollIntoView();
 }
 
 $(document).ready(function(){

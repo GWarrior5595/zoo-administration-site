@@ -22,10 +22,10 @@
       <div id="page-wrapper" >
           <div id="page-inner">
               <div class="row">
-                  <div class="col-md-12">
+                  <div id="topPage"class="col-md-12">
                     <button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>
+                    <button type="button" class ="btn btn-default btn-sm" onClick="document.getElementById('addEmployee').scrollIntoView();">Add Employee</button>                    
                     <input id="user-first-name" placeholder="Search table by any column! (Jennifer)" type="text" size="40" />
-                    <!--<button type="button" class ="btn btn-default btn-sm" id="searchEmployees">Click me to display employee by first name with SQL!</button>-->
                     <p id="output"></p> 
                     <div id="showData"></div>
                   </div>
