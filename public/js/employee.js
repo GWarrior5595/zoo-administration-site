@@ -176,6 +176,7 @@ function CreateTableFromJSON(myData) {
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
 
+
     $("#dataTable").tablesorter();
 }
 
