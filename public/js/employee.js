@@ -2,6 +2,15 @@ function deleteEntry(element){
     var id = {
             'Employee ID': element.id
         };
+    var r = confirm("Are you sure you want to delete this employee?");
+        if (r == true) 
+        {
+            x = "You have successfully deleted the employee.";
+        } 
+        else 
+        {
+            x = "Employee not deleted.";
+        }
     $.ajax({
         url: "/deleteEmployee",
         type: "POST",
