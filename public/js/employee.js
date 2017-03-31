@@ -6,22 +6,23 @@ function deleteEntry(element){
         if (r == true) 
         {
             x = "You have successfully deleted the employee.";
+            $.ajax({
+                url: "/deleteEmployee",
+                type: "POST",
+                contentType: "application/json",
+                processData: false,
+                data: JSON.stringify(id),
+                complete: function (data) {
+            $('#output').html(data.responseText);    
+            reloadEmployeeTable();        
+             }
+            });
         } 
         else 
         {
             x = "Employee not deleted.";
         }
-    $.ajax({
-        url: "/deleteEmployee",
-        type: "POST",
-        contentType: "application/json",
-        processData: false,
-        data: JSON.stringify(id),
-        complete: function (data) {
-            $('#output').html(data.responseText);    
-            reloadEmployeeTable();        
-        }
-    });
+
 }
 
 //this will get called when the edit submit button is pressed.
