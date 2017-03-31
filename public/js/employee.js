@@ -36,6 +36,8 @@ function initializeEditEntry(element){
     var id = {
           'Employee ID': element.id
       };
+    var editInfoPromptBox = prompt("Edit: ", "name here");
+    
     $.ajax({
         url: "/searchEmployeeByID",
         type: "POST",
