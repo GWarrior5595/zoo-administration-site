@@ -227,7 +227,7 @@ function insertEmployee(element){
             'Last Name': $("#lastNameEntry").val(),
             'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
             'Job Desciption': $("#jobDescriptionEntry").val(),
-            'Hire Date': today,
+            'Hire Date': today - 6,
             'Shifts': $("#shiftEntry").val(),
             'Salary': $("#salaryEntry").val()
         };
