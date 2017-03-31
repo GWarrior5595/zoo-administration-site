@@ -6,7 +6,7 @@ function deleteEntry(element){
         //if user clicks "OK" when asked if they want to delete employee
         if (r == true) 
         {
-            x = "You have successfully deleted the employee.";
+            //x = "You have successfully deleted the employee.";
             alert("You have successfully deleted the employee. Changes will be visible once you exit this dialog.");
             
             $.ajax({
@@ -24,7 +24,7 @@ function deleteEntry(element){
         //if user clicks "Cancel" when asked if they want to delete employee
         else 
         {
-            x = "Employee not deleted.";
+            //x = "Employee not deleted.";
             alert("Employee not deleted.");
         }
 
