@@ -193,6 +193,7 @@ function insertEmployee(element){
     } 
 
     today = yyyy+"-"+mm+"-"+dd;
+
     var entry;
 
     if(enclosure.options[enclosure.selectedIndex].id == ''){
@@ -227,7 +228,7 @@ function insertEmployee(element){
             'Last Name': $("#lastNameEntry").val(),
             'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
             'Job Desciption': $("#jobDescriptionEntry").val(),
-            'Hire Date': today - 6,
+            'Hire Date': today.getDate(),
             'Shifts': $("#shiftEntry").val(),
             'Salary': $("#salaryEntry").val()
         };
