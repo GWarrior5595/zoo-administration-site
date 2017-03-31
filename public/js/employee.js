@@ -202,7 +202,7 @@ function insertEmployee(element){
             'Last Name': $("#lastNameEntry").val(),
             'Shop ID': shop.options[shop.selectedIndex].id,
             'Job Desciption': $("#jobDescriptionEntry").val(),
-            'Hire Date': today,
+            'Hire Date': write(today),
             'Shifts': $("#shiftEntry").val(),
             'Salary': $("#salaryEntry").val()
         };
