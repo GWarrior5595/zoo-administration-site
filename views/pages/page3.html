@@ -4,6 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="js/chartist.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link href="stylesheets/paper-dashboard.css" rel="stylesheet" type='text/css' />
+    <link href="stylesheets/themify-icons.css" rel="stylesheet" type='text/css' />
     <script>
       $(function(){
           $("#nav-placeholder").load("/navbar"); 
@@ -21,31 +28,29 @@
               <div class="row">
                   <div class="col-md-12">
                     Sales
-                         <div class="col-lg-4 col-sm-6">
-                              <div class="card">
+                         <div class="card">
                                   <div class="content">
                                       <div class="row">
                                           <div class="col-xs-5">
-                                              <div class="icon-big icon-danger text-center">
-                                                  <i class="ti-pulse"></i>
+                                              <div class="icon-big icon-warning text-center">
+                                                  <i class="ti-face-smile"></i>
                                               </div>
                                           </div>
                                           <div class="col-xs-7">
                                               <div class="numbers">
-                                                  <p>Complaints</p>
-                                                  8
+                                                  <p>Current Visitors</p>
+                                                  <div id="zoo-visitors">594</div>
                                               </div>
                                           </div>
                                       </div>
                                       <div class="footer">
                                           <hr />
                                           <div class="stats">
-                                              <i class="ti-reload"></i> The past week
+                                              <i class="ti-reload"></i> Updated now
                                           </div>
                                       </div>
                                   </div>
-                              </div>
-                          </div>    
+                              </div>    
 
                   </div>
               </div>              
