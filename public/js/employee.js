@@ -52,6 +52,7 @@ function initializeEditEntry(element){
     });
 }
 
+
 function reloadEmployeeTable(){
     $.ajax({
           url: "/allEmployees",
