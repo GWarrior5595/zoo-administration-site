@@ -36,8 +36,6 @@ function initializeEditEntry(element){
     var id = {
           'Employee ID': element.id
       };
-    var editInfoPromptBox = prompt("Edit: ", id.Name);
-
     $.ajax({
         url: "/searchEmployeeByID",
         type: "POST",
@@ -195,7 +193,6 @@ function insertEmployee(element){
     } 
 
     today = yyyy+"-"+mm+"-"+dd;
-
     var entry;
 
     if(enclosure.options[enclosure.selectedIndex].id == ''){
@@ -205,7 +202,7 @@ function insertEmployee(element){
             'Last Name': $("#lastNameEntry").val(),
             'Shop ID': shop.options[shop.selectedIndex].id,
             'Job Desciption': $("#jobDescriptionEntry").val(),
-            'Hire Date': write(today),
+            'Hire Date': today,
             'Shifts': $("#shiftEntry").val(),
             'Salary': $("#salaryEntry").val()
         };
@@ -230,7 +227,7 @@ function insertEmployee(element){
             'Last Name': $("#lastNameEntry").val(),
             'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
             'Job Desciption': $("#jobDescriptionEntry").val(),
-            'Hire Date': today.getDate(),
+            'Hire Date': today,
             'Shifts': $("#shiftEntry").val(),
             'Salary': $("#salaryEntry").val()
         };
