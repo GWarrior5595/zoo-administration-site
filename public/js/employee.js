@@ -110,6 +110,19 @@ function initializeEditEntry(element){
         }
     });
     $("#dialog-form").dialog("open");
+    setTimeout(function(){
+        var enclosure = document.getElementById("editEnclosure");
+        var shop = document.getElementById("editShop");
+        if(shop.selectedIndex > 0){
+            $('#editEnclosure').prop('disabled', true); 
+            $('#editShop').prop('disabled', false);                           
+        }
+
+        if(enclosure.selectedIndex > 0){
+            $('#editShop').prop('disabled', true); 
+            $('#editEnclosure').prop('disabled', false);                                              
+        }
+    }, 600);
 }
 
 
