@@ -13,9 +13,9 @@ function deleteEntry(element){
                 processData: false,
                 data: JSON.stringify(id),
                 complete: function (data) {
-            $('#output').html(data.responseText);    
-            reloadEmployeeTable();        
-             }
+                    $('#output').html(data.responseText);    
+                        reloadEmployeeTable();        
+                    }
             });
         } 
 
@@ -60,19 +60,18 @@ function reloadEmployeeTable(){
           contentType: "application/json",
           processData: false,
           complete: function (data) {
-              CreateTableFromJSON(JSON.parse(data.responseText));
-              initializeInsertEmployeeFields();             
+              CreateTableFromJSON(JSON.parse(data.responseText));            
           }
       });
 }
 
 function initializeInsertEmployeeFields(){
     var divContainer = document.getElementById("showData");      
-    divContainer.innerHTML += "<h3 id='addEmployee'>Add New Employee</h3><br/><form id='submit' method='post' action='/addEmployee'><input type='text' name='first' id='firstNameEntry' placeholder='First Name'><input type='text' id='lastNameEntry' name='last' placeholder='Last Name'><input type='text' id='jobDescriptionEntry' name='job-description' placeholder='Job Description'><input type='text' id='shiftEntry' name='shift' placeholder='Shifts'><input type='number' id='salaryEntry' name='salary' placeholder='Salary'>"
+    divContainer.innerHTML += "<h3 id='addEmployee'>Add New Employee</h3><form id='submit' method='post' action='/addEmployee'><input type='text' name='first' id='firstNameEntry' placeholder='First Name'><input type='text' id='lastNameEntry' name='last' placeholder='Last Name'><input type='text' id='jobDescriptionEntry' name='job-description' placeholder='Job Description'><input type='text' id='shiftEntry' name='shift' placeholder='Shifts'><input type='number' id='salaryEntry' name='salary' placeholder='Salary'>"
     //<input type='text' name='hiredate' placeholder='Hire-Date (YYYY-MM-DD)'>
     divContainer.innerHTML += "What Shop do they work at?  <select id='shop'></select></br>";
     divContainer.innerHTML += "What Enclosure do they work at?  <select id='enclosure'></select><br/>";        
-    divContainer.innerHTML += "<input type='submit' onclick='insertEmployee(this)' value='Submit'></form>"
+    divContainer.innerHTML += "<input type='submit' onclick='insertEmployee(this)' value='Submit'><hr>"
 
     $.ajax({
         url: "/getIDAndNameOfShops",
@@ -171,9 +170,11 @@ function CreateTableFromJSON(myData) {
         tabcelledit.innerHTML = "<span id='" + rowID +"' onclick='initializeEditEntry(this)' class='table-edit glyphicon glyphicon-edit'></span>"        
     }
 
+    //delete previous table
+    $("#dataTable").remove();
+
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
     var divContainer = document.getElementById("showData");
-    divContainer.innerHTML = "";
     divContainer.appendChild(table);
 
     $("#dataTable").tablesorter();
@@ -246,20 +247,41 @@ function insertEmployee(element){
             reloadEmployeeTable();
         }
     });
+    document.getElementById("submit").reset();
     document.getElementById('topPage').scrollIntoView();
 }
 
 $(document).ready(function(){
-  $.ajax({
-      url: "/allEmployees",
-      type: "POST",
-      contentType: "application/json",
-      processData: false,
-      complete: function (data) {
-          CreateTableFromJSON(JSON.parse(data.responseText));
-          initializeInsertEmployeeFields();
-      }
-  });
+    reloadEmployeeTable();
+    initializeInsertEmployeeFields();
+    $('select').change(function(){
+        $this = $(this);
+        myId = $this.attr('id');
+        myVal = $this.val();
+
+        var enclosure = document.getElementById("enclosure");
+        var shop = document.getElementById("shop");
+
+        if(myId == 'shop'){
+            $('select').prop('disabled',false);
+            if (shop.selectedIndex > 0) {
+                $('#enclosure').prop('disabled', true);
+            }
+            else{
+                $('#enclosure').prop('disabled', false);                
+            }
+        }
+        else if(myId == 'enclosure'){
+            $('select').prop('disabled',false);
+            if (enclosure.selectedIndex > 0) {
+                $('#shop').prop('disabled', true);
+            }
+            else{
+                $('#shop').prop('disabled', false);                
+            }
+        }
+    })
+    
 
   $('#user-first-name').keyup(function() { 
     var $rows = $('#dataTable tbody  tr');
