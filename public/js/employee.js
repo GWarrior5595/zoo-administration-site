@@ -21,22 +21,10 @@ function deleteEntry(element){
 
 }
 
-//this will get called when the edit submit button is pressed.
-function editEmployeeEntry(){
-    //initialize variable based on input. Make if else statement if enclosure is null or shop ID is null
-    var info = {
-
-    }
-
-    //once have information, make ajax request to /editEmployeeByID
-    //then reload the html table like before
-}
-
 function initializeEditEntry(element){
     var id = {
           'Employee ID': element.id
       };
-      var editInfoPromptBox = prompt("Edit: ", id.Name);
     $.ajax({
         url: "/searchEmployeeByID",
         type: "POST",
@@ -44,12 +32,73 @@ function initializeEditEntry(element){
         processData: false,
         data: JSON.stringify(id),
         complete: function (data) {
-            var employeeInfo = data.responseText;
-
+            var employeeInfo = JSON.parse(data.responseText);
             //insert employee info into inputs so user can edit.
+            $("#editedUserID").val(employeeInfo[0]['Employee ID'])           
+            $("#editFirstName").val(employeeInfo[0]['First Name']);
+            $("#editLastName").val(employeeInfo[0]['Last Name']);
+            $("#editJobDescription").val(employeeInfo[0]['Job Desciption']);
+            $("#editShift").val(employeeInfo[0]['Shifts']);
+            $("#editSalary").val(employeeInfo[0]['Salary']);
 
+            $.ajax({
+                url: "/getIDAndNameOfShops",
+                type: "POST",
+                contentType: "application/json",
+                processData: false,
+                complete: function (data) {
+                    var shopsData = JSON.parse(data.responseText);
+
+                    var sel = document.getElementById('editShop');
+                    var optnull = document.createElement('option');
+                    optnull.innerHTML = ""
+                    optnull.value = null;
+                    sel.appendChild(optnull);
+                    for(var i = 0; i < shopsData.length; i++) {
+                        var opt = document.createElement('option');
+                        opt.innerHTML = shopsData[i].Name;
+                        opt.value = shopsData[i].Name;
+                        opt.id = shopsData[i]["Shop ID"]
+                        sel.appendChild(opt);
+                        if(employeeInfo[0]['Shop ID'] !== null && employeeInfo[0]['Shop ID'] === shopsData[i]["Shop ID"]) {
+                            $("#editShop").prop('selectedIndex', shopsData[i]["Shop ID"]);
+                            $("#editEnclosure").prop('selectedIndex', 0);                            
+                        }
+                    }
+                }
+            });
+
+
+            $.ajax({
+                url: "/getIDAndNameOfEnclosures",
+                type: "POST",
+                contentType: "application/json",
+                processData: false,
+                complete: function (data) {
+                    enclosureData = JSON.parse(data.responseText);
+
+                    var sel = document.getElementById('editEnclosure');
+                    var optnull = document.createElement('option');
+                    optnull.innerHTML = ""
+                    optnull.value = null;
+                    sel.appendChild(optnull);
+                    for(var i = 0; i < enclosureData.length; i++) {
+                        var opt = document.createElement('option');
+                        opt.innerHTML = enclosureData[i].Name;
+                        opt.value = enclosureData[i].Name;
+                        opt.id = enclosureData[i]["Enclosure"]
+                        sel.appendChild(opt);
+                        if(employeeInfo[0]['Enclosure ID'] !== null && employeeInfo[0]['Enclosure ID'] === enclosureData[i]["Enclosure"]) {
+                            $("#editEnclosure").prop('selectedIndex', enclosureData[i]["Enclosure"]);
+                            $("#editShop").prop('selectedIndex', 0);                                                        
+                        }
+                    }
+                }
+            });
+                      
         }
     });
+    $("#dialog-form").dialog("open");
 }
 
 
@@ -68,7 +117,6 @@ function reloadEmployeeTable(){
 function initializeInsertEmployeeFields(){
     var divContainer = document.getElementById("showData");      
     divContainer.innerHTML += "<h3 id='addEmployee'>Add New Employee</h3><form id='submit' method='post' action='/addEmployee'><input type='text' name='first' id='firstNameEntry' placeholder='First Name'><input type='text' id='lastNameEntry' name='last' placeholder='Last Name'><input type='text' id='jobDescriptionEntry' name='job-description' placeholder='Job Description'><input type='text' id='shiftEntry' name='shift' placeholder='Shifts'><input type='number' id='salaryEntry' name='salary' placeholder='Salary'>"
-    //<input type='text' name='hiredate' placeholder='Hire-Date (YYYY-MM-DD)'>
     divContainer.innerHTML += "What Shop do they work at?  <select id='shop'></select></br>";
     divContainer.innerHTML += "What Enclosure do they work at?  <select id='enclosure'></select><br/>";        
     divContainer.innerHTML += "<input type='submit' onclick='insertEmployee(this)' value='Submit'><hr>"
@@ -198,7 +246,7 @@ function insertEmployee(element){
     today = yyyy+"-"+mm+"-"+dd;
     var entry;
 
-    if(enclosure.options[enclosure.selectedIndex].id == ''){
+    if(enclosure.options[enclosure.selectedIndex].id === ''){
         entry = {
             'Zoo ID': 1,
             'First Name': $("#firstNameEntry").val(),
@@ -210,20 +258,7 @@ function insertEmployee(element){
             'Salary': $("#salaryEntry").val()
         };
     }
-    else if (enclosure.options[enclosure.selectedIndex].id != '' && shop.options[shop.selectedIndex].id != ''){
-        entry = {
-            'Zoo ID': 1,
-            'First Name': $("#firstNameEntry").val(),
-            'Last Name': $("#lastNameEntry").val(),
-            'Shop ID': shop.options[shop.selectedIndex].id,            
-            'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
-            'Job Desciption': $("#jobDescriptionEntry").val(),
-            'Hire Date': today,
-            'Shifts': $("#shiftEntry").val(),
-            'Salary': $("#salaryEntry").val()
-        };
-    }
-    else{
+    else if (shop.options[shop.selectedIndex].id === ''){
         entry = {
             'Zoo ID': 1,
             'First Name': $("#firstNameEntry").val(),
@@ -252,19 +287,73 @@ function insertEmployee(element){
 }
 
 $(document).ready(function(){
+    $("#dialog-form").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Submit": function () {
+
+                var enclosure = document.getElementById("editEnclosure");
+                var shop = document.getElementById("editShop");
+                var entry;
+
+                if(enclosure.options[enclosure.selectedIndex].id === ''){
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Shop ID': shop.options[shop.selectedIndex].id,
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
+                }
+                else if (shop.options[shop.selectedIndex].id === ''){
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
+                }
+                $.ajax({
+                    url: "/editEmployeeByID/" + $("#editedUserID").val(),
+                    type: "POST",
+                    contentType: "application/json",
+                    processData: false,
+                    data: JSON.stringify(entry),
+                    complete: function (data) {
+                        $('#output').html(data.responseText);
+                    }
+                });
+                
+                reloadEmployeeTable();                                
+                $(this).dialog("close");
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () { }
+    });
+
     reloadEmployeeTable();
     initializeInsertEmployeeFields();
+
     $('select').change(function(){
         $this = $(this);
         myId = $this.attr('id');
         myVal = $this.val();
 
-        var enclosure = document.getElementById("enclosure");
-        var shop = document.getElementById("shop");
+        var insertEnclosure = document.getElementById("enclosure");
+        var insertShop = document.getElementById("shop");
 
         if(myId == 'shop'){
             $('select').prop('disabled',false);
-            if (shop.selectedIndex > 0) {
+            if (insertShop.selectedIndex > 0) {
                 $('#enclosure').prop('disabled', true);
             }
             else{
@@ -273,11 +362,33 @@ $(document).ready(function(){
         }
         else if(myId == 'enclosure'){
             $('select').prop('disabled',false);
-            if (enclosure.selectedIndex > 0) {
+            if (insertEnclosure.selectedIndex > 0) {
                 $('#shop').prop('disabled', true);
             }
             else{
                 $('#shop').prop('disabled', false);                
+            }
+        }
+
+        var editEnclosure = document.getElementById("editEnclosure");
+        var editShop = document.getElementById("editShop");
+
+        if(myId == 'editShop'){
+            $('select').prop('disabled',false);
+            if (editShop.selectedIndex > 0) {
+                $('#editEnclosure').prop('disabled', true);
+            }
+            else{
+                $('#editEnclosure').prop('disabled', false);                
+            }
+        }
+        else if(myId == 'editEnclosure'){
+            $('select').prop('disabled',false);
+            if (editEnclosure.selectedIndex > 0) {
+                $('#editShop').prop('disabled', true);
+            }
+            else{
+                $('#editShop').prop('disabled', false);                
             }
         }
     })

@@ -84,11 +84,10 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/editEmployeeByID', function(req, res){
-        db.editEmployeeByID(req.body, function(err, data){
+    app.post('/editEmployeeByID/:id', function(req, res){
+        db.editEmployeeByID(req.body, req.params.id, function(err, data){
             if(err) {console.log("error"); return;}
             else{
-                //format data in here
                 // res.send('User edited to database with ID: ' + data.insertId);
             }
         });

@@ -123,20 +123,18 @@ deleteEmployeeByID = function(data, callback){
 
 module.exports.deleteEmployeeByID = deleteEmployeeByID
 
-editEmployeeByID = function(data, callback){
-  var sql = "DELETE from employee "
-          + "WHERE `Employee ID` = ?"
+editEmployeeByID = function(data, id, callback){
+  var sql = "UPDATE employee set ? WHERE `Employee ID` = ? "
 
-  console.log(data);
-  // pool.getConnection(function(err, connection) {
-  //   if(err) { console.log(err); callback(true); return; }
-  //   // make the query
-  //   connection.query(sql, data['Employee ID'], function(err, results) {
-  //     connection.release();
-  //     if(err) { console.log(err); callback(true); return; }
-  //     callback(false, results);
-  //   });
-  // });
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, [data, id], function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
 }
 
 module.exports.editEmployeeByID = editEmployeeByID
