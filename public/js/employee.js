@@ -41,6 +41,17 @@ function initializeEditEntry(element){
             $("#editShift").val(employeeInfo[0]['Shifts']);
             $("#editSalary").val(employeeInfo[0]['Salary']);
 
+            var list = document.getElementById('editShop');
+            while (list.firstChild) {
+                list.removeChild(list.firstChild);
+            }
+
+            var list = document.getElementById('editEnclosure');
+            while (list.firstChild) {
+                list.removeChild(list.firstChild);
+            }
+
+
             $.ajax({
                 url: "/getIDAndNameOfShops",
                 type: "POST",
@@ -342,7 +353,7 @@ $(document).ready(function(){
 
     reloadEmployeeTable();
     initializeInsertEmployeeFields();
-
+    
     $('select').change(function(){
         $this = $(this);
         myId = $this.attr('id');
