@@ -136,7 +136,7 @@ module.exports = function(app, passport) {
         db.editEmployeeByID(req.body, req.params.id, function(err, data){
             if(err) {console.log("error"); return;}
             else{
-                // res.send('User edited to database with ID: ' + data.insertId);
+                 res.send('User edited to database');
             }
         });
     });

@@ -26,11 +26,20 @@
           <div id="page-inner">
               <div class="row">
                   <div id="topPage"class="col-md-12">
-                    <button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>
-                    <input id="user-first-name" placeholder="Search table by any column!" type="text" size="40" />
-                    <button type="button" onclick="initializeInsertEmployeeFields()" class ="btn btn-default btn-sm" id="addEmployee">Add Employee!</button>                    
-                    <h3 style="color: red"id="output"></h3> 
-                    <div id="showData"></div>
+                    <div class='card'>
+                      <div class='header'>
+                        <h3 class='title'> Employee List</h3>
+                        <p style="color: red"id="output"></p> 
+                      </div>
+                      <!--<button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>-->
+                      <div class='content'>
+                        Search: <input id="user-first-name" type="text"/>
+                        
+                        <button type="button" style="float: right"onclick="initializeInsertEmployeeFields()" class ="btn btn-default btn-md" id="addEmployee">Add Employee!</button>                    
+                        
+                        <div id="showData"></div>
+                      </div>
+                    </div>
                     <div id="dialog-form-edit" title="Edit Employee">
                       <form>
                           <fieldset>
@@ -64,8 +73,8 @@
                               
                           </fieldset>
                       </form>
-                  </div>
-                  <div id="dialog-form-insert" title="Edit Employee">
+                    </div>
+                  <div id="dialog-form-insert" title="Insert Employee">
                       <form>
                           <fieldset>
                               <label for="firstName">First Name</label>
