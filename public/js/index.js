@@ -51,8 +51,31 @@ $(document).ready(function(){
 
     Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
 
-    Chartist.Pie('#chartPreferences', {
-          labels: ['$3.2','$6.0','$0.8'],
-          series: [32, 60, 8]
-        });
+        var seriesData = [32, 60, 8];
+        var seriesLabel = ['$3.2','$6.0','$0.8'];
+        var obj = [];
+        seriesLabel.forEach(function(item, i) {
+            var temp = {}
+            temp["type"] = item;
+            temp["dollars"] = seriesData[i];
+            obj.push(temp);
+        }); 
+        
+        var chart = AmCharts.makeChart( "pieDiv", {
+            "type": "pie",
+            "theme": "light",
+            "dataProvider": obj,
+            "valueField": "dollars",
+            "titleField": "type",
+            "balloon":{
+            "fixedPosition":true
+            },
+            "export": {
+                "enabled": false
+            }
+        } );
+    // Chartist.Pie('#chartPreferences', {
+    //       labels: ['$3.2','$6.0','$0.8'],
+    //       series: [32, 60, 8]
+    //     });
 });

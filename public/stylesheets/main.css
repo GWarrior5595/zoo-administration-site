@@ -105,7 +105,12 @@ body {
 }
 
 .table>tbody>tr>td {
-    padding: 4px;
+    padding: 6px;
+}
+
+#pieDiv {
+  width: 100%;
+  height: 500px;
 }
 
 /*==============================================
