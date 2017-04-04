@@ -28,9 +28,10 @@
                   <div id="topPage"class="col-md-12">
                     <button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>
                     <input id="user-first-name" placeholder="Search table by any column!" type="text" size="40" />
+                    <button type="button" onclick="initializeInsertEmployeeFields()" class ="btn btn-default btn-sm" id="addEmployee">Add Employee!</button>                    
                     <h3 style="color: red"id="output"></h3> 
                     <div id="showData"></div>
-                    <div id="dialog-form" title="Edit Employee">
+                    <div id="dialog-form-edit" title="Edit Employee">
                       <form>
                           <fieldset>
                               <p id="editedUserID"></p>
@@ -57,6 +58,39 @@
 
                               <label for="editEnclosure">Enclosure</label>                              
                               <select id="editEnclosure">
+                                
+                              </select>
+                             <br>
+                              
+                          </fieldset>
+                      </form>
+                  </div>
+                  <div id="dialog-form-insert" title="Edit Employee">
+                      <form>
+                          <fieldset>
+                              <label for="firstName">First Name</label>
+                              <input type="text" name="firstName" id="firstName" value="" class="text ui-widget-content ui-corner-all" />                             
+                             <br>                             
+                              <label for="lastName">Last Name</label>
+                              <input type="text" name="lastName" id="lastName" value="" class="text ui-widget-content ui-corner-all" />                                                           
+                             <br>                             
+                              <label for="jobDescription">Job Description</label>
+                              <input type="text" name="jobDescription" id="jobDescription" value="" class="text ui-widget-content ui-corner-all"/>
+                             <br>
+                              <label for="shift">Shift</label>
+                              <input type="text" name="shift" id="shift" value=""class="text ui-widget-content ui-corner-all" />
+                             <br>
+                              <label for="salary">Salary</label>
+                              <input type="number" name="salary" id="salary" value=""class="text ui-widget-content ui-corner-all" />
+                             <br>
+                              <label for="shop">Shop</label>                              
+                              <select id="shop">
+                                
+                              </select>
+                             <br>
+
+                              <label for="enclosure">Enclosure</label>                              
+                              <select id="enclosure">
                                 
                               </select>
                              <br>

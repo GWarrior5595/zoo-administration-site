@@ -73,7 +73,7 @@ function initializeEditEntry(element){
                         sel.appendChild(opt);
                         if(employeeInfo[0]['Shop ID'] !== null && employeeInfo[0]['Shop ID'] === shopsData[i]["Shop ID"]) {
                             $("#editShop").prop('selectedIndex', shopsData[i]["Shop ID"]);
-                            $("#editEnclosure").prop('selectedIndex', 0);                            
+                                                      
                         }
                     }
                 }
@@ -101,7 +101,7 @@ function initializeEditEntry(element){
                         sel.appendChild(opt);
                         if(employeeInfo[0]['Enclosure ID'] !== null && employeeInfo[0]['Enclosure ID'] === enclosureData[i]["Enclosure"]) {
                             $("#editEnclosure").prop('selectedIndex', enclosureData[i]["Enclosure"]);
-                            $("#editShop").prop('selectedIndex', 0);                                                        
+                                                                                   
                         }
                     }
                 }
@@ -109,20 +109,7 @@ function initializeEditEntry(element){
                       
         }
     });
-    $("#dialog-form").dialog("open");
-    setTimeout(function(){
-        var enclosure = document.getElementById("editEnclosure");
-        var shop = document.getElementById("editShop");
-        if(shop.selectedIndex > 0){
-            $('#editEnclosure').prop('disabled', true); 
-            $('#editShop').prop('disabled', false);                           
-        }
-
-        if(enclosure.selectedIndex > 0){
-            $('#editShop').prop('disabled', true); 
-            $('#editEnclosure').prop('disabled', false);                                              
-        }
-    }, 600);
+    $("#dialog-form-edit").dialog("open");
 }
 
 
@@ -138,12 +125,23 @@ function reloadEmployeeTable(){
       });
 }
 
-function initializeInsertEmployeeFields(){
-    var divContainer = document.getElementById("showData");      
-    divContainer.innerHTML += "<h3 id='addEmployee'>Add New Employee</h3><form id='submit' method='post' action='/addEmployee'><input type='text' name='first' id='firstNameEntry' placeholder='First Name'><input type='text' id='lastNameEntry' name='last' placeholder='Last Name'><input type='text' id='jobDescriptionEntry' name='job-description' placeholder='Job Description'><input type='text' id='shiftEntry' name='shift' placeholder='Shifts'><input type='number' id='salaryEntry' name='salary' placeholder='Salary'>"
-    divContainer.innerHTML += "What Shop do they work at?  <select id='shop'></select></br>";
-    divContainer.innerHTML += "What Enclosure do they work at?  <select id='enclosure'></select><br/>";        
-    divContainer.innerHTML += "<input type='submit' onclick='insertEmployee(this)' value='Submit'><hr>"
+function initializeInsertEmployeeFields(){         
+    $("#firstName").val("");
+    $("#lastName").val("");
+    $("#jobDescription").val("");
+    $("#shift").val("");
+    $("#salary").val("");
+
+    var list = document.getElementById('shop');
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    }
+
+    var list = document.getElementById('enclosure');
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    }
+
 
     $.ajax({
         url: "/getIDAndNameOfShops",
@@ -168,6 +166,7 @@ function initializeInsertEmployeeFields(){
         }
     });
 
+
     $.ajax({
         url: "/getIDAndNameOfEnclosures",
         type: "POST",
@@ -190,6 +189,8 @@ function initializeInsertEmployeeFields(){
             }
         }
     });
+                    
+    $("#dialog-form-insert").dialog("open");
     $("#dataTable").tablesorter();
     
   }
@@ -252,7 +253,7 @@ function CreateTableFromJSON(myData) {
     $("#dataTable").tablesorter();
 }
 
-function insertEmployee(element){
+function insertEmployee(){
     var enclosure = document.getElementById("enclosure");
     var shop = document.getElementById("shop");
     var today = new Date();
@@ -273,25 +274,38 @@ function insertEmployee(element){
     if(enclosure.options[enclosure.selectedIndex].id === ''){
         entry = {
             'Zoo ID': 1,
-            'First Name': $("#firstNameEntry").val(),
-            'Last Name': $("#lastNameEntry").val(),
+            'First Name': $("#firstName").val(),
+            'Last Name': $("#lastName").val(),
             'Shop ID': shop.options[shop.selectedIndex].id,
-            'Job Desciption': $("#jobDescriptionEntry").val(),
+            'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
-            'Shifts': $("#shiftEntry").val(),
-            'Salary': $("#salaryEntry").val()
+            'Shifts': $("#shift").val(),
+            'Salary': $("#salary").val()
         };
     }
     else if (shop.options[shop.selectedIndex].id === ''){
         entry = {
             'Zoo ID': 1,
-            'First Name': $("#firstNameEntry").val(),
-            'Last Name': $("#lastNameEntry").val(),
+            'First Name': $("#firstName").val(),
+            'Last Name': $("#lastName").val(),
             'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
-            'Job Desciption': $("#jobDescriptionEntry").val(),
+            'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
-            'Shifts': $("#shiftEntry").val(),
-            'Salary': $("#salaryEntry").val()
+            'Shifts': $("#shift").val(),
+            'Salary': $("#salary").val()
+        };
+    }
+    else{
+        entry = {
+            'Zoo ID': 1,
+            'First Name': $("#firstName").val(),
+            'Last Name': $("#lastName").val(),
+            'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+            'Shop ID': shop.options[shop.selectedIndex].id,            
+            'Job Desciption': $("#jobDescription").val(),
+            'Hire Date': today,
+            'Shifts': $("#shift").val(),
+            'Salary': $("#salary").val()
         };
     }
 
@@ -306,12 +320,13 @@ function insertEmployee(element){
             reloadEmployeeTable();
         }
     });
-    document.getElementById("submit").reset();
-    document.getElementById('topPage').scrollIntoView();
+
+    $("#dialog-form-insert").dialog("close");    
+    document.getElementById('output').scrollIntoView();
 }
 
 $(document).ready(function(){
-    $("#dialog-form").dialog({
+    $("#dialog-form-edit").dialog({
         autoOpen: false,
         height: 400,
         width: 300,
@@ -343,6 +358,17 @@ $(document).ready(function(){
                         'Salary': $("#editSalary").val()
                     };
                 }
+                else{
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Shop ID': shop.options[shop.selectedIndex].id,                        
+                        'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
+                }
                 $.ajax({
                     url: "/editEmployeeByID/" + $("#editedUserID").val(),
                     type: "POST",
@@ -354,7 +380,28 @@ $(document).ready(function(){
                     }
                 });
                 
-                reloadEmployeeTable();                                
+                reloadEmployeeTable(); 
+
+                $(this).dialog("close");
+                reloadEmployeeTable();                 
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () { }
+    });
+
+    $("#dialog-form-insert").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Submit": function () {
+
+                insertEmployee();    
+
                 $(this).dialog("close");
             },
             Cancel: function () {
@@ -365,58 +412,6 @@ $(document).ready(function(){
     });
 
     reloadEmployeeTable();
-    initializeInsertEmployeeFields();
-    
-    $('select').change(function(){
-        $this = $(this);
-        myId = $this.attr('id');
-        myVal = $this.val();
-
-        var insertEnclosure = document.getElementById("enclosure");
-        var insertShop = document.getElementById("shop");
-
-        if(myId == 'shop'){
-            $('select').prop('disabled',false);
-            if (insertShop.selectedIndex > 0) {
-                $('#enclosure').prop('disabled', true);
-            }
-            else{
-                $('#enclosure').prop('disabled', false);                
-            }
-        }
-        else if(myId == 'enclosure'){
-            $('select').prop('disabled',false);
-            if (insertEnclosure.selectedIndex > 0) {
-                $('#shop').prop('disabled', true);
-            }
-            else{
-                $('#shop').prop('disabled', false);                
-            }
-        }
-
-        var editEnclosure = document.getElementById("editEnclosure");
-        var editShop = document.getElementById("editShop");
-
-        if(myId == 'editShop'){
-            $('select').prop('disabled',false);
-            if (editShop.selectedIndex > 0) {
-                $('#editEnclosure').prop('disabled', true);
-            }
-            else{
-                $('#editEnclosure').prop('disabled', false);                
-            }
-        }
-        else if(myId == 'editEnclosure'){
-            $('select').prop('disabled',false);
-            if (editEnclosure.selectedIndex > 0) {
-                $('#editShop').prop('disabled', true);
-            }
-            else{
-                $('#editShop').prop('disabled', false);                
-            }
-        }
-    })
-    
 
   $('#user-first-name').keyup(function() { 
     var $rows = $('#dataTable tbody  tr');
@@ -431,23 +426,6 @@ $(document).ready(function(){
   
   $('#allEmployees').click(function () {
       reloadEmployeeTable();
-  });
-
-  $('#searchEmployees').click(function () {
-      var id = {
-          'First Name': $('#user-first-name').val()
-      };
-      
-      $.ajax({
-          url: "/searchEmployees",
-          type: "POST",
-          contentType: "application/json",
-          processData: false,
-          data: JSON.stringify(id),
-          complete: function (data) {
-              CreateTableFromJSON(JSON.parse(data.responseText));
-          }
-      });
   });
     $("#dataTable").tablesorter();  
 });

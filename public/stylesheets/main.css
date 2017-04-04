@@ -104,6 +104,10 @@ body {
      text-decoration:none;
 }
 
+.table>tbody>tr>td {
+    padding: 4px;
+}
+
 /*==============================================
     MEDIA QUERIES     
     =============================================*/

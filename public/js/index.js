@@ -3,6 +3,16 @@ $(document).ready(function(){
         $("#nav-placeholder").load("/navbar"); 
     });
 
+    $.ajax({
+          url: "/getRevenue",
+          type: "POST",
+          contentType: "application/json",
+          processData: false,
+          complete: function (data) {
+              var jsonData = JSON.parse(data.responseText);   
+              document.getElementById("zoo-revenue").innerHTML = "$" + jsonData[0]['Revenue']
+          }
+      });
 
     var dataSales = {
           labels: ['8:00AM', '10:00PM', '1:00PM', '3:00PM', '4:00PM'],
@@ -45,33 +55,4 @@ $(document).ready(function(){
           labels: ['$3.2','$6.0','$0.8'],
           series: [32, 60, 8]
         });
-        
-    // $('#allEmployees').click(function () {
-    //     $.ajax({
-    //         url: "/allEmployees",
-    //         type: "POST",
-    //         contentType: "application/json",
-    //         processData: false,
-    //         complete: function (data) {
-    //             $('#output').html(data.responseText);
-    //         }
-    //     });
-    // });
-
-    // $('#searchEmployees').click(function () {
-    //     var id = {
-    //         'First Name': $('#user-first-name').val()
-    //     };
-        
-    //     $.ajax({
-    //         url: "/searchEmployees",
-    //         type: "POST",
-    //         contentType: "application/json",
-    //         processData: false,
-    //         data: JSON.stringify(id),
-    //         complete: function (data) {
-    //             $('#output').html(data.responseText);
-    //         }
-    //     });
-    // });
 });

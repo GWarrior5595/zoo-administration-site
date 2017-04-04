@@ -26,8 +26,8 @@ module.exports = function(app, passport) {
     res.render("page2.html");
   });
 
-  app.get("/page3", isLoggedIn, function(req,res){
-    res.render("page3.html");
+  app.get("/sales", isLoggedIn, function(req,res){
+    res.render("sales.html");
   });
 
   app.get("/page4", isLoggedIn, function(req,res){
@@ -54,6 +54,24 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/allOrders', function(req, res){
+        db.getAllOrders(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/getRevenue', function(req, res){
+        db.getRevenueOfAllOrders(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                res.send(data);
+            }
+        });
+    });
+
     app.post('/searchEmployeeByID', function(req, res){
         db.getEmployeeByID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
@@ -73,6 +91,36 @@ module.exports = function(app, passport) {
             }
         });
     });
+
+    app.post('/getTotalRevenueByShopTypeID', function(req, res){
+        db.getTotalRevenueByShopTypeID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/getTotalOrderNumberByShopTypeID', function(req, res){
+        db.getTotalOrderNumberByShopTypeID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/getAllShopTypes', function(req, res){
+        db.getAllShopTypes(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
 
     app.post('/addEmployee', function(req, res){
         db.insertEmployee(req.body, function(err, data){
