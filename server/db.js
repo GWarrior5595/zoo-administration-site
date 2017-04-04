@@ -169,9 +169,10 @@ editEmployeeByID = function(data, id, callback){
 module.exports.editEmployeeByID = editEmployeeByID
 
 getTotalRevenueByShopTypeID = function(data, callback){
-  var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue` "
-            + "FROM orders, shop "
+  var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue`, type.`Type` "
+            + "FROM orders, shop, `Shop Type` as type "
             + "WHERE orders.`Shop ID` = shop.`Shop ID` "
+            + "AND type.`Shop Type ID` = shop.`Shop Type ID` "
 		        + "AND shop.`Shop Type ID` = ? "
 
   pool.getConnection(function(err, connection) {
@@ -240,7 +241,7 @@ module.exports.getAllShops = getAllShops
 
 
 getTotalOrderNumberByShopID = function(data, callback){
-  var sql = "SELECT DISTINCT shop.`Name`, COUNT(orders.`Shop ID`) as 'Total Orders' "
+  var sql = "SELECT DISTINCT shop.`Name`, COUNT(orders.`Shop ID`) as 'Total Orders', shop.`Shop ID` "
           + "FROM shop, orders "
           + "WHERE shop.`Shop ID` = orders.`Shop ID` AND orders.`Shop ID` = ? "
 

@@ -148,44 +148,46 @@ $(document).ready(function(){
             complete: function (data) {
                 var allShopTypes = JSON.parse(data.responseText);    
                 allShopTypes.forEach(function(element) {
-                var type = element['Type']
-                var id = {
-                    'Shop Type ID': element['Shop Type ID']
-                };
-                seriesLabel.push(type);
-                $.ajax({
-                    url: "/getTotalRevenueByShopTypeID",
-                    type: "POST",
-                    contentType: "application/json",
-                    processData: false,
-                    data: JSON.stringify(id),
-                    complete: function (revenueData) {
-                        var jsonRevenueData = JSON.parse(revenueData.responseText);
-                        var revenue = jsonRevenueData[0]['Revenue'];
-                        seriesRevenueData.push(Math.round(revenue*100)/100);
-                        
-                        setTimeout(function(){
-                        //   $.ajax({
-                        //       url: "/getTotalOrderNumberByShopTypeID",
-                        //       type: "POST",
-                        //       contentType: "application/json",
-                        //       processData: false,
-                        //       data: JSON.stringify(id),
-                        //       complete: function (countData) {  
-                        //         var jsonCountData = JSON.parse(countData.responseText);
-                        //         var orderNumber = jsonCountData[0]['Total Orders']
-                        //         seriesOrderData.push(orderNumber);
-                        //         //   document.getElementById("cardsContainer").innerHTML += "<div class='row'><h3 style='text-align: center'>" + type + "</h3> <hr> <div class='col-lg-6 col-sm-6'> <div class='card'> <div class='content'> <div class='row'> <div class='col-xs-5'> <div class='icon-big icon-warning text-center'> <i class='ti-face-smile'></i> </div> </div> <div class='col-xs-7'> <div class='numbers'> <p>Number of Orders</p> <div id='zoo-ticket-number'>"+ jsonCountData[0]['Total Orders'] +"</div> </div> </div> </div> <div class='footer'> <hr /> <div class='stats'> <i class='ti-reload'></i> Updated now </div> </div> </div> </div> </div> <div class='col-lg-6 col-sm-6'> <div class='card'> <div class='content'> <div class='row'> <div class='col-xs-5'> <div class='icon-big icon-success text-center'> <i class='ti-wallet'></i> </div> </div> <div class='col-xs-7'> <div class='numbers'> <p>Revenue</p> <div id='zoo-ticket-sales'>$"+ Math.round(revenue*100)/100 +"</div> </div> </div> </div> <div class='footer'> <hr /> <div class='stats'> <i class='ti-reload'></i> Today </div> </div> </div> </div> </div> </div>"           
-                        //       }
-                        //   });
+                    var id = {
+                        'Shop Type ID': element['Shop Type ID']
+                    };
+                    setTimeout(function(){
+                        $.ajax({
+                            url: "/getTotalRevenueByShopTypeID",
+                            type: "POST",
+                            contentType: "application/json",
+                            processData: false,
+                            data: JSON.stringify(id),
+                            complete: function (revenueData) {
+                                var jsonRevenueData = JSON.parse(revenueData.responseText);
+                                var type = jsonRevenueData[0]['Type']
+                                seriesLabel.push(type);
+                                var revenue = jsonRevenueData[0]['Revenue'];
+                                seriesRevenueData.push(Math.round(revenue*100)/100);
+                                
+                                setTimeout(function(){
+                                //   $.ajax({
+                                //       url: "/getTotalOrderNumberByShopTypeID",
+                                //       type: "POST",
+                                //       contentType: "application/json",
+                                //       processData: false,
+                                //       data: JSON.stringify(id),
+                                //       complete: function (countData) {  
+                                //         var jsonCountData = JSON.parse(countData.responseText);
+                                //         var orderNumber = jsonCountData[0]['Total Orders']
+                                //         seriesOrderData.push(orderNumber);
+                                //         //   document.getElementById("cardsContainer").innerHTML += "<div class='row'><h3 style='text-align: center'>" + type + "</h3> <hr> <div class='col-lg-6 col-sm-6'> <div class='card'> <div class='content'> <div class='row'> <div class='col-xs-5'> <div class='icon-big icon-warning text-center'> <i class='ti-face-smile'></i> </div> </div> <div class='col-xs-7'> <div class='numbers'> <p>Number of Orders</p> <div id='zoo-ticket-number'>"+ jsonCountData[0]['Total Orders'] +"</div> </div> </div> </div> <div class='footer'> <hr /> <div class='stats'> <i class='ti-reload'></i> Updated now </div> </div> </div> </div> </div> <div class='col-lg-6 col-sm-6'> <div class='card'> <div class='content'> <div class='row'> <div class='col-xs-5'> <div class='icon-big icon-success text-center'> <i class='ti-wallet'></i> </div> </div> <div class='col-xs-7'> <div class='numbers'> <p>Revenue</p> <div id='zoo-ticket-sales'>$"+ Math.round(revenue*100)/100 +"</div> </div> </div> </div> <div class='footer'> <hr /> <div class='stats'> <i class='ti-reload'></i> Today </div> </div> </div> </div> </div> </div>"           
+                                //       }
+                                //   });
+                                }, 200);
+                            }
                         }, 200);
-                    }
-                });
+                    });
                 
                 }, this);        
             }
         });
-    }, 30);
+    }, 300);
     setTimeout(function(){
         $.ajax({
             url: "/getAllShops",
@@ -193,25 +195,27 @@ $(document).ready(function(){
             contentType: "application/json",
             processData: false,
             complete: function (shopData) {
-                var allShop = JSON.parse(shopData.responseText);    
-                    allShop.forEach(function(element) {
-                    var name = element['Name']
+                var allShop = JSON.parse(shopData.responseText);   
+                allShop.forEach(function(element) {
                     var id = {
                         'Shop ID': element['Shop ID']
                     };
-                    seriesBarLabel.push(name);
-                    $.ajax({
-                        url: "/getTotalOrderNumberByShopID",
-                        type: "POST",
-                        contentType: "application/json",
-                        processData: false,
-                        data: JSON.stringify(id),
-                        complete: function (ordersData) {
-                            var jsonOrdersData = JSON.parse(ordersData.responseText);
-                            var totalOrders = jsonOrdersData[0]['Total Orders'];
-                            seriesOrderData.push(totalOrders);
-                        }
-                    });
+                    setTimeout(function(){
+                        $.ajax({
+                            url: "/getTotalOrderNumberByShopID",
+                            type: "POST",
+                            contentType: "application/json",
+                            processData: false,
+                            data: JSON.stringify(id),
+                            complete: function (ordersData) {
+                                var jsonOrdersData = JSON.parse(ordersData.responseText);
+                                var name = jsonOrdersData[0]['Name']
+                                seriesBarLabel.push(name);                                
+                                var totalOrders = jsonOrdersData[0]['Total Orders'];
+                                seriesOrderData.push(totalOrders);
+                            }
+                        });
+                    },300);
                 });
             }
         });
