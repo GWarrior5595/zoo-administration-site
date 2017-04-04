@@ -66,7 +66,7 @@ $(document).ready(function(){
     Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
 
         var seriesData = [32, 60, 8];
-        var seriesLabel = ['$3.2','$6.0','$0.8'];
+        var seriesLabel = ['Long-Term Donors','Corporate','Individual Donors'];
         var obj = [];
         seriesLabel.forEach(function(item, i) {
             var temp = {}
