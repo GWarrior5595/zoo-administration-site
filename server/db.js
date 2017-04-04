@@ -222,6 +222,41 @@ getAllShopTypes = function(callback){
 
 module.exports.getAllShopTypes = getAllShopTypes
 
+getAllShops = function(callback){
+  var sql = "SELECT * FROM `Shop`"
+
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getAllShops = getAllShops
+
+
+getTotalOrderNumberByShopID = function(data, callback){
+  var sql = "SELECT DISTINCT shop.`Name`, COUNT(orders.`Shop ID`) as 'Total Orders' "
+          + "FROM shop, orders "
+          + "WHERE shop.`Shop ID` = orders.`Shop ID` AND orders.`Shop ID` = ? "
+
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, data['Shop ID'], function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getTotalOrderNumberByShopID = getTotalOrderNumberByShopID
+
 getRevenueOfAllOrders = function(callback){
   var sql = "SELECT SUM(orders.`Payment Amount`) as `Revenue` FROM orders"
   var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue`, shop.`Name` FROM orders, shop WHERE shop.`Shop ID` = orders.`Shop ID` AND shop.`Shop Type ID` = 1"

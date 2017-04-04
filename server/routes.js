@@ -112,6 +112,26 @@ module.exports = function(app, passport) {
         })
     })
 
+    app.post('/getTotalOrderNumberByShopID', function(req, res){
+        db.getTotalOrderNumberByShopID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/getAllShops', function(req, res){
+        db.getAllShops(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
     app.post('/getAllShopTypes', function(req, res){
         db.getAllShopTypes(function(err, data){
             if(err) {console.log("error"); return;}
