@@ -260,7 +260,6 @@ module.exports.getTotalOrderNumberByShopID = getTotalOrderNumberByShopID
 
 getRevenueOfAllOrders = function(callback){
   var sql = "SELECT SUM(orders.`Payment Amount`) as `Revenue` FROM orders"
-  var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue`, shop.`Name` FROM orders, shop WHERE shop.`Shop ID` = orders.`Shop ID` AND shop.`Shop Type ID` = 1"
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }

@@ -13,6 +13,20 @@ $(document).ready(function(){
               document.getElementById("zoo-revenue").innerHTML = "$" + jsonData[0]['Revenue']
           }
       });
+      var id = {
+          'Shop Type ID': 1 //hardcoded... for now
+      };
+    $.ajax({
+          url: "/getTotalRevenueByShopTypeID",
+          type: "POST",
+          contentType: "application/json",
+          processData: false,
+          data: JSON.stringify(id),
+          complete: function (data) {
+              var jsonData = JSON.parse(data.responseText);   
+              document.getElementById("zoo-visitors").innerHTML = (jsonData[0]['Revenue']/10)
+          }
+      });
 
     var dataSales = {
           labels: ['8:00AM', '10:00PM', '1:00PM', '3:00PM', '4:00PM'],
