@@ -137,7 +137,7 @@ $(document).ready(function(){
             }
 
             });
-    }, 2000);
+    }, 3000);
 
     setTimeout(function(){
         $.ajax({
@@ -220,7 +220,6 @@ $(document).ready(function(){
             }
         });
     }, 300);
-    setTimeout(function(){
         $.ajax({
             url: "/allOrders",
             type: "POST",
@@ -232,5 +231,4 @@ $(document).ready(function(){
                 //$("#dataTable").tablesorter();              
             }
         });
-    },1000);
 });
