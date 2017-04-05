@@ -19,21 +19,21 @@ var pool = mysql.createPool({
 // connection.end();
 
 getAllEmployees = function(callback) {
-  var sql = "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, date(employee.`Hire Date`) as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+  var sql = "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM employee, shop "
           + "WHERE employee.`Shop ID` = shop.`Shop ID` "
           + "AND employee.`Enclosure ID` IS NULL "
 
           + "UNION ALL "
 
-          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, '' as `Shop Name`, employee.`Job Desciption`, date(employee.`Hire Date`) as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, '' as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM enclosure, employee "
            + "WHERE employee.`Enclosure ID` = enclosure.`Enclosure` "
           + "AND employee.`Shop ID` IS NULL "
           
           + "UNION ALL "
 			
-          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, date(employee.`Hire Date`) as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM enclosure, employee, shop "
           + "WHERE employee.`Enclosure ID` IS NOT NULL AND employee.`Shop ID` IS NOT NULL AND employee.`Enclosure ID` = enclosure.`Enclosure` AND employee.`Shop ID` = shop.`Shop ID` "
           
@@ -55,7 +55,7 @@ module.exports.getAllEmployees = getAllEmployees
 
 getAllOrders = function(callback) {
   //we have to use backticks " ` " when wanting to select columns with spaces in their name
-  var sql = "SELECT DISTINCT ord.`Order ID`, ord.`Date`, ord.`Time`,ord.`Payment Type`, ord.`Payment Amount`, shop.`Name` as `Shop Name`, concat(customers.`First Name`, ' ',customers.`Last Name`) as `Customer Name` "
+  var sql = "SELECT DISTINCT ord.`Order ID`, DATE_FORMAT(ord.`Date`, '%m/%d/%Y') as `Date`, ord.`Time`,ord.`Payment Type`, ord.`Payment Amount`, shop.`Name` as `Shop Name`, concat(customers.`First Name`, ' ',customers.`Last Name`) as `Customer Name` "
           + "FROM orders as ord, shop, customers "
           + "WHERE ord.`Shop ID` = shop.`Shop ID` "
           + "AND ord.`Customer ID` = customers.`Customer ID` "
@@ -273,3 +273,57 @@ getRevenueOfAllOrders = function(callback){
 }
 
 module.exports.getRevenueOfAllOrders =  getRevenueOfAllOrders
+
+getAllOrdersFromPast30Days = function(callback){
+  var sql = "SELECT * "
+          + "FROM orders "
+          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() "
+
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getAllOrdersFromPast30Days =  getAllOrdersFromPast30Days
+
+getAllOrdersFromPastWeek = function(callback){
+  var sql = "SELECT * "
+          + "FROM orders "
+          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE() "
+
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getAllOrdersFromPastWeek =  getAllOrdersFromPastWeek
+
+getAllOrdersFromPastYear = function(callback){
+  var sql = "SELECT * "
+          + "FROM orders "
+          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL 365 DAY AND CURDATE() "
+
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getAllOrdersFromPastYear =  getAllOrdersFromPastYear
