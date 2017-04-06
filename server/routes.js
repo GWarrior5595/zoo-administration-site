@@ -112,6 +112,26 @@ module.exports = function(app, passport) {
         })
     })
 
+    app.post('/getTotalRevenueFromDateByShopTypeID', function(req, res){
+        db.getTotalRevenueFromDateByShopTypeID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/getTotalOrderNumberFromDateByShopID', function(req, res){
+        db.getTotalOrderNumberFromDateByShopID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
     app.post('/getTotalOrderNumberByShopID', function(req, res){
         db.getTotalOrderNumberByShopID(req.body, function(err, data){
             if(err) {console.log("error"); return;}

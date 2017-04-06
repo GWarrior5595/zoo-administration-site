@@ -65,7 +65,7 @@ function CreateTableFromJSON(myData) {
 
 }
 
-function displayRevenueForShopTypes(){
+function displayRevenueForShopTypes(date){
     $.ajax({
         url: "/getAllShopTypes",
         type: "POST",
@@ -77,11 +77,12 @@ function displayRevenueForShopTypes(){
             var seriesRevenueData = []  
             allShopTypes.forEach(function(element) {
                 var id = {
-                    'Shop Type ID': element['Shop Type ID']
+                    'Shop Type ID': element['Shop Type ID'],
+                    'Time':date
                 };
                 setTimeout(function(){
                     $.ajax({
-                        url: "/getTotalRevenueByShopTypeID", //from date
+                        url: "/getTotalRevenueFromDateByShopTypeID", //from date
                         type: "POST",
                         contentType: "application/json",
                         processData: false,
@@ -123,7 +124,7 @@ function displayRevenueForShopTypes(){
     });
 }
 
-function displayOrderNumbersForShops(){
+function displayOrderNumbersForShops(date){
     $.ajax({
         url: "/getAllShops",
         type: "POST",
@@ -135,11 +136,12 @@ function displayOrderNumbersForShops(){
             var seriesOrderData = []   
             allShop.forEach(function(element) {
                 var id = {
-                    'Shop ID': element['Shop ID']
+                    'Shop ID': element['Shop ID'],
+                    'Time': date
                 };
                 setTimeout(function(){
                     $.ajax({
-                        url: "/getTotalOrderNumberByShopID", //from date
+                        url: "/getTotalOrderNumberFromDateByShopID", //from date
                         type: "POST",
                         contentType: "application/json",
                         processData: false,
@@ -202,23 +204,31 @@ function displayOrderNumbersForShops(){
 }
 
 $(document).ready(function(){   
+    $('#pieDateSelect').on('change', function (e) {
+        displayRevenueForShopTypes(this.value)        
+    });
+
+    $('#barDateSelect').on('change', function (e) {
+        displayOrderNumbersForShops(this.value)        
+    });
+
     setTimeout(function(){
-        displayRevenueForShopTypes()
+        displayRevenueForShopTypes(30000)
     }, 300);
 
     setTimeout(function(){
-        displayOrderNumbersForShops();
+        displayOrderNumbersForShops(30000);
     }, 300);
 
-        $.ajax({
-            url: "/allOrders", //from date
-            type: "POST",
-            contentType: "application/json",
-            processData: false,
-            complete: function (data) {
-                CreateTableFromJSON(JSON.parse(data.responseText));   
-                document.getElementById('page-inner').scrollIntoView();
-                //$("#dataTable").tablesorter();              
-            }
-        });
+    $.ajax({
+        url: "/allOrders", //from date
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        complete: function (data) {
+            CreateTableFromJSON(JSON.parse(data.responseText));   
+            document.getElementById('page-inner').scrollIntoView();
+            //$("#dataTable").tablesorter();              
+        }
+    });
 });
