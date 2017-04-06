@@ -92,9 +92,13 @@
                                 <h2 class="title">List of Orders</h2>
                             </div>
                             <div class="content">
-                                <div id="ordersTable">
-                                    
-                                </div>
+                              <select id="tableDateSelect">
+                                  <option value="30000">From All Time</option>
+                                  <option value="7">From Last Week</option>
+                                  <option value="30">From Last Month</option>
+                                  <option value="365">From Last Year</option>
+                                </select>
+                                <div id="ordersTable"></div>
                                 <hr>
                                 <div class="stats">
                                     <i class="ti-reload"></i> Updated Now

@@ -92,6 +92,16 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/getAllOrdersFromDate', function(req, res){
+        db.getAllOrdersFromDate(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
     app.post('/getTotalRevenueByShopTypeID', function(req, res){
         db.getTotalRevenueByShopTypeID(req.body, function(err, data){
             if(err) {console.log("error"); return;}

@@ -203,6 +203,23 @@ function displayOrderNumbersForShops(date){
     });
 }
 
+function displayAllOrders(date){
+    var id = {
+        'Time': date
+    };
+    $.ajax({
+        url: "/getAllOrdersFromDate", //from date
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(id),
+        complete: function (data) {
+            CreateTableFromJSON(JSON.parse(data.responseText));   
+            //$("#dataTable").tablesorter();              
+        }
+    });
+}
+
 $(document).ready(function(){   
     $('#pieDateSelect').on('change', function (e) {
         displayRevenueForShopTypes(this.value)        
@@ -210,6 +227,11 @@ $(document).ready(function(){
 
     $('#barDateSelect').on('change', function (e) {
         displayOrderNumbersForShops(this.value)        
+    });
+
+    $('#tableDateSelect').on('change', function (e) {
+        document.getElementById("ordersTable").innerHTML = "";
+        displayAllOrders(this.value)        
     });
 
     setTimeout(function(){
@@ -220,15 +242,9 @@ $(document).ready(function(){
         displayOrderNumbersForShops(30000);
     }, 300);
 
-    $.ajax({
-        url: "/allOrders", //from date
-        type: "POST",
-        contentType: "application/json",
-        processData: false,
-        complete: function (data) {
-            CreateTableFromJSON(JSON.parse(data.responseText));   
-            document.getElementById('page-inner').scrollIntoView();
-            //$("#dataTable").tablesorter();              
-        }
-    });
+    setTimeout(function(){
+        displayAllOrders(30000);
+    },300);
+
+    
 });

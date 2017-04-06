@@ -89,9 +89,9 @@ getEmployeeByID = function(data, callback) {
 }
 module.exports.getEmployeeByID = getEmployeeByID
 
-getIDAndNameOfShops = function(data, callback){
+getIDAndNameOfShops = function(callback){
   var sql = "SELECT `Shop ID`, `Name`"
-          + "FROM heroku_db65f8e9326be4b.shop";
+          + "FROM shop";
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
@@ -105,9 +105,9 @@ getIDAndNameOfShops = function(data, callback){
 
 module.exports.getIDAndNameOfShops = getIDAndNameOfShops
 
-getIDAndNameOfEnclosures = function(data, callback){
+getIDAndNameOfEnclosures = function(callback){
   var sql = "SELECT `Enclosure`, `Name`"
-          + "FROM heroku_db65f8e9326be4b.enclosure";
+          + "FROM enclosure";
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
