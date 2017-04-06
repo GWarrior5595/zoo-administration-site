@@ -274,15 +274,15 @@ getRevenueOfAllOrders = function(callback){
 
 module.exports.getRevenueOfAllOrders =  getRevenueOfAllOrders
 
-getAllOrdersFromPast30Days = function(callback){
+getAllOrdersFromDate = function(data, callback){
   var sql = "SELECT * "
           + "FROM orders "
-          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() "
+          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
-    connection.query(sql, function(err, results) {
+    connection.query(sql, data["Time"], function(err, results) {
       connection.release();
       if(err) { console.log(err); callback(true); return; }
       callback(false, results);
@@ -290,17 +290,17 @@ getAllOrdersFromPast30Days = function(callback){
   });
 }
 
-module.exports.getAllOrdersFromPast30Days =  getAllOrdersFromPast30Days
+module.exports.getAllOrdersFromDate =  getAllOrdersFromDate
 
-getAllOrdersFromPastWeek = function(callback){
+getAllOrdersFromDateByShopID = function(data, callback){
   var sql = "SELECT * "
           + "FROM orders "
-          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE() "
+          + "WHERE orders.`Shop ID` = ? AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
-    connection.query(sql, function(err, results) {
+    connection.query(sql, [data['Shop ID'], data["Time"]], function(err, results) {
       connection.release();
       if(err) { console.log(err); callback(true); return; }
       callback(false, results);
@@ -308,17 +308,17 @@ getAllOrdersFromPastWeek = function(callback){
   });
 }
 
-module.exports.getAllOrdersFromPastWeek =  getAllOrdersFromPastWeek
+module.exports.getAllOrdersFromDateByShopID =  getAllOrdersFromDateByShopID
 
-getAllOrdersFromPastYear = function(callback){
-  var sql = "SELECT * "
-          + "FROM orders "
-          + "WHERE DATE(orders.Date) BETWEEN CURDATE() - INTERVAL 365 DAY AND CURDATE() "
+getTotalOrderNumberFromDateByShopID = function(data, callback){
+  var sql = "SELECT DISTINCT shop.`Name`, COUNT(orders.`Shop ID`) as 'Total Orders', shop.`Shop ID` "
+          + "FROM shop, orders "
+          + "WHERE shop.`Shop ID` = orders.`Shop ID` AND orders.`Shop ID` = ? AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
-    connection.query(sql, function(err, results) {
+    connection.query(sql, [data['Shop ID'], data['Time']], function(err, results) {
       connection.release();
       if(err) { console.log(err); callback(true); return; }
       callback(false, results);
@@ -326,4 +326,43 @@ getAllOrdersFromPastYear = function(callback){
   });
 }
 
-module.exports.getAllOrdersFromPastYear =  getAllOrdersFromPastYear
+module.exports.getTotalOrderNumberFromDateByShopID = getTotalOrderNumberFromDateByShopID
+
+// getTotalOrderNumberFromDateByShopTypeID = function(data, callback){
+//   var sql = "SELECT DISTINCT COUNT(orders.`Payment Amount`) as `Total Orders` "
+//             + "FROM orders, shop "
+//             + "WHERE orders.`Shop ID` = shop.`Shop ID` "
+// 		        + "AND shop.`Shop Type ID` = ? AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
+
+//   pool.getConnection(function(err, connection) {
+//     if(err) { console.log(err); callback(true); return; }
+//     // make the query
+//     connection.query(sql, [data['Shop Type ID'], data['Time']], function(err, results) {
+//       connection.release();
+//       if(err) { console.log(err); callback(true); return; }
+//       callback(false, results);
+//     });
+//   });
+// }
+
+// module.exports.getTotalOrderNumberFromDateByShopTypeID = getTotalOrderNumberFromDateByShopTypeID
+
+getTotalRevenueFromDateByShopTypeID = function(data, callback){
+  var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue`, type.`Type` "
+            + "FROM orders, shop, `Shop Type` as type "
+            + "WHERE orders.`Shop ID` = shop.`Shop ID` "
+            + "AND type.`Shop Type ID` = shop.`Shop Type ID` "
+		        + "AND shop.`Shop Type ID` = ? AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
+
+  pool.getConnection(function(err, connection) {
+    if(err) { console.log(err); callback(true); return; }
+    // make the query
+    connection.query(sql, [data['Shop Type ID'], data['Time']], function(err, results) {
+      connection.release();
+      if(err) { console.log(err); callback(true); return; }
+      callback(false, results);
+    });
+  });
+}
+
+module.exports.getTotalRevenueFromDateByShopTypeID = getTotalRevenueFromDateByShopTypeID

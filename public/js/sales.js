@@ -65,144 +65,153 @@ function CreateTableFromJSON(myData) {
 
 }
 
+function displayRevenueForShopTypes(){
+    $.ajax({
+        url: "/getAllShopTypes",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        complete: function (data) {
+            var allShopTypes = JSON.parse(data.responseText);  
+            var seriesLabel = []
+            var seriesRevenueData = []  
+            allShopTypes.forEach(function(element) {
+                var id = {
+                    'Shop Type ID': element['Shop Type ID']
+                };
+                setTimeout(function(){
+                    $.ajax({
+                        url: "/getTotalRevenueByShopTypeID", //from date
+                        type: "POST",
+                        contentType: "application/json",
+                        processData: false,
+                        data: JSON.stringify(id),
+                        complete: function (revenueData) {
+                            var jsonRevenueData = JSON.parse(revenueData.responseText);
+                            var type = jsonRevenueData[0]['Type']
+                            seriesLabel.push(type);
+                            var revenue = jsonRevenueData[0]['Revenue'];
+                            seriesRevenueData.push(Math.round(revenue*100)/100);
+                            
+                            var obj = [];
+                            seriesLabel.forEach(function(item, i) {
+                                var temp = {}
+                                temp["type"] = item;
+                                temp["dollars"] = seriesRevenueData[i];
+                                obj.push(temp);
+                            }); 
+                            var chart;
+                            chart = AmCharts.makeChart( "pieDiv", {
+                                "type": "pie",
+                                "theme": "light",
+                                "dataProvider": obj,
+                                "valueField": "dollars",
+                                "titleField": "type",
+                                "balloon":{
+                                "fixedPosition":true
+                                },
+                                "export": {
+                                    "enabled": false
+                                }
+                            } );
+                        }
+                    }, 200);
+                });
+            
+            }, this);        
+        }
+    });
+}
+
+function displayOrderNumbersForShops(){
+    $.ajax({
+        url: "/getAllShops",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        complete: function (shopData) {
+            var allShop = JSON.parse(shopData.responseText); 
+            var seriesBarLabel = []
+            var seriesOrderData = []   
+            allShop.forEach(function(element) {
+                var id = {
+                    'Shop ID': element['Shop ID']
+                };
+                setTimeout(function(){
+                    $.ajax({
+                        url: "/getTotalOrderNumberByShopID", //from date
+                        type: "POST",
+                        contentType: "application/json",
+                        processData: false,
+                        data: JSON.stringify(id),
+                        complete: function (ordersData) {
+                            var jsonOrdersData = JSON.parse(ordersData.responseText);
+                            var name = jsonOrdersData[0]['Name']
+                            seriesBarLabel.push(name);                                
+                            var totalOrders = jsonOrdersData[0]['Total Orders'];
+                            seriesOrderData.push(totalOrders);
+                            var objBar = [];
+                            seriesBarLabel.forEach(function(item, i) {
+                                var temp = {}
+                                temp["type"] = item;
+                                temp["order"] = seriesOrderData[i];
+                                temp['color'] = getRandomColor();
+                                objBar.push(temp);
+                            });
+
+                            chart = AmCharts.makeChart("barDiv", {
+                                "type": "serial",
+                                "theme": "patterns",
+                                "marginRight": 70,
+                                "dataProvider": objBar,
+                                "valueAxes": [{
+                                    "axisAlpha": 0,
+                                    "position": "left",
+                                    "title": "Orders from Shop"
+                                }],
+                                "startDuration": 1,
+                                "graphs": [{
+                                    "balloonText": "<b>[[category]]: [[value]]</b>",
+                                    "fillColorsField": "color",
+                                    "fillAlphas": 0.9,
+                                    "lineAlpha": 0.2,
+                                    "type": "column",
+                                    "valueField": "order"
+                                }],
+                                "chartCursor": {
+                                    "categoryBalloonEnabled": false,
+                                    "cursorAlpha": 0,
+                                    "zoomable": false
+                                },
+                                "categoryField": "type",
+                                "categoryAxis": {
+                                    "gridPosition": "start",
+                                    "labelRotation": 45
+                                },
+                                "export": {
+                                    "enabled": false
+                                }
+
+                                });
+                        }
+                    });
+                },300);
+            });
+        }
+    });
+}
 
 $(document).ready(function(){   
     setTimeout(function(){
-        $.ajax({
-            url: "/getAllShopTypes",
-            type: "POST",
-            contentType: "application/json",
-            processData: false,
-            complete: function (data) {
-                var allShopTypes = JSON.parse(data.responseText);  
-                var seriesLabel = []
-                var seriesRevenueData = []  
-                allShopTypes.forEach(function(element) {
-                    var id = {
-                        'Shop Type ID': element['Shop Type ID']
-                    };
-                    setTimeout(function(){
-                        $.ajax({
-                            url: "/getTotalRevenueByShopTypeID",
-                            type: "POST",
-                            contentType: "application/json",
-                            processData: false,
-                            data: JSON.stringify(id),
-                            complete: function (revenueData) {
-                                var jsonRevenueData = JSON.parse(revenueData.responseText);
-                                var type = jsonRevenueData[0]['Type']
-                                seriesLabel.push(type);
-                                var revenue = jsonRevenueData[0]['Revenue'];
-                                seriesRevenueData.push(Math.round(revenue*100)/100);
-                                
-                                var obj = [];
-                                seriesLabel.forEach(function(item, i) {
-                                    var temp = {}
-                                    temp["type"] = item;
-                                    temp["dollars"] = seriesRevenueData[i];
-                                    obj.push(temp);
-                                }); 
-                                var chart;
-                                chart = AmCharts.makeChart( "pieDiv", {
-                                    "type": "pie",
-                                    "theme": "light",
-                                    "dataProvider": obj,
-                                    "valueField": "dollars",
-                                    "titleField": "type",
-                                    "balloon":{
-                                    "fixedPosition":true
-                                    },
-                                    "export": {
-                                        "enabled": false
-                                    }
-                                } );
-                            }
-                        }, 200);
-                    });
-                
-                }, this);        
-            }
-        });
+        displayRevenueForShopTypes()
     }, 300);
+
     setTimeout(function(){
-        $.ajax({
-            url: "/getAllShops",
-            type: "POST",
-            contentType: "application/json",
-            processData: false,
-            complete: function (shopData) {
-                var allShop = JSON.parse(shopData.responseText); 
-                var seriesBarLabel = []
-                var seriesOrderData = []   
-                allShop.forEach(function(element) {
-                    var id = {
-                        'Shop ID': element['Shop ID']
-                    };
-                    setTimeout(function(){
-                        $.ajax({
-                            url: "/getTotalOrderNumberByShopID",
-                            type: "POST",
-                            contentType: "application/json",
-                            processData: false,
-                            data: JSON.stringify(id),
-                            complete: function (ordersData) {
-                                var jsonOrdersData = JSON.parse(ordersData.responseText);
-                                var name = jsonOrdersData[0]['Name']
-                                seriesBarLabel.push(name);                                
-                                var totalOrders = jsonOrdersData[0]['Total Orders'];
-                                seriesOrderData.push(totalOrders);
-                                var objBar = [];
-                                seriesBarLabel.forEach(function(item, i) {
-                                    var temp = {}
-                                    temp["type"] = item;
-                                    temp["order"] = seriesOrderData[i];
-                                    temp['color'] = getRandomColor();
-                                    objBar.push(temp);
-                                });
-
-                                chart = AmCharts.makeChart("barDiv", {
-                                    "type": "serial",
-                                    "theme": "patterns",
-                                    "marginRight": 70,
-                                    "dataProvider": objBar,
-                                    "valueAxes": [{
-                                        "axisAlpha": 0,
-                                        "position": "left",
-                                        "title": "Orders from Shop"
-                                    }],
-                                    "startDuration": 1,
-                                    "graphs": [{
-                                        "balloonText": "<b>[[category]]: [[value]]</b>",
-                                        "fillColorsField": "color",
-                                        "fillAlphas": 0.9,
-                                        "lineAlpha": 0.2,
-                                        "type": "column",
-                                        "valueField": "order"
-                                    }],
-                                    "chartCursor": {
-                                        "categoryBalloonEnabled": false,
-                                        "cursorAlpha": 0,
-                                        "zoomable": false
-                                    },
-                                    "categoryField": "type",
-                                    "categoryAxis": {
-                                        "gridPosition": "start",
-                                        "labelRotation": 45
-                                    },
-                                    "export": {
-                                        "enabled": false
-                                    }
-
-                                    });
-                            }
-                        });
-                    },300);
-                });
-            }
-        });
+        displayOrderNumbersForShops();
     }, 300);
+
         $.ajax({
-            url: "/allOrders",
+            url: "/allOrders", //from date
             type: "POST",
             contentType: "application/json",
             processData: false,
