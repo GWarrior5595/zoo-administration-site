@@ -281,6 +281,8 @@ getAllOrdersFromDate = function(data, callback){
   var sql = "SELECT DISTINCT ord.`Order ID`, DATE_FORMAT(ord.`Date`, '%m/%d/%Y') as `Date`, ord.`Time`,ord.`Payment Type`, ord.`Payment Amount`, shop.`Name` as `Shop Name`, concat(customers.`First Name`, ' ',customers.`Last Name`) as `Customer Name`  "
           + "FROM orders as ord, shop, customers "
           + "WHERE DATE(ord.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
+          + "AND shop.`Shop ID` = ord.`Shop ID` "
+          + "AND customers.`Customer ID` = ord.`Customer ID` "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
@@ -299,6 +301,8 @@ getAllOrdersFromDateByShopID = function(data, callback){
   var sql = "SELECT DISTINCT ord.`Order ID`, DATE_FORMAT(ord.`Date`, '%m/%d/%Y') as `Date`, ord.`Time`,ord.`Payment Type`, ord.`Payment Amount`, shop.`Name` as `Shop Name`, concat(customers.`First Name`, ' ',customers.`Last Name`) as `Customer Name`  "
           + "FROM orders as ord, shop, customers "
           + "WHERE ord.`Shop ID` = ? AND DATE(ord.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
+          + "AND ord.`Shop ID` = shop.`Shop ID` "
+          + "AND ord.`Customer ID` = customer.`Customer ID` "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
@@ -315,10 +319,11 @@ module.exports.getAllOrdersFromDateByShopID =  getAllOrdersFromDateByShopID
 
 getTotalOrderNumberFromDateByShopID = function(data, callback){
   var sql = "SELECT DISTINCT shop.`Name`, COUNT(orders.`Shop ID`) as 'Total Orders', shop.`Shop ID` "
-          + "FROM shop, orders "
+          + "FROM shop, orders, `Shop Type` as type "
           + "WHERE shop.`Shop ID` = orders.`Shop ID` AND orders.`Shop ID` = ? "
           + "AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
-          + "AND NOT shop.`Shop Type ID` = 22 " //exclude donations
+          + "AND type.`Shop Type ID` = shop.`Shop Type ID` "
+          + "AND NOT type.type = 'Donations' "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
@@ -358,7 +363,7 @@ getTotalRevenueFromDateByShopTypeID = function(data, callback){
             + "WHERE orders.`Shop ID` = shop.`Shop ID` "
             + "AND type.`Shop Type ID` = shop.`Shop Type ID` "
 		        + "AND shop.`Shop Type ID` = ? AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
-            + "AND NOT type.`Shop Type ID` = 22 " //exclude donations
+            + "AND NOT type.type = 'Donations' "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
@@ -374,19 +379,20 @@ getTotalRevenueFromDateByShopTypeID = function(data, callback){
 module.exports.getTotalRevenueFromDateByShopTypeID = getTotalRevenueFromDateByShopTypeID
 
 
-getTotalRevenueFromDateByDonations = function(data, callback){
-  var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue`, type.`Type` "
-            + "FROM orders, shop, customers,`Shop Type` as type "
-            + "WHERE orders.`Shop ID` = shop.`Shop ID` "
-            + "AND customers.`Customer ID` = orders.`Customer ID` "
-		        + "AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
-            + "AND shop.`Shop Type ID` = type.`Shop Type ID` "
-            + "AND type.type = ? "
+getAllOrdersFromDateWithDonations = function(data, callback){
+  var sql = "SELECT DISTINCT Sum(orders.`Payment Amount`) as `Donation Amount`, type.`Type`, concat(customers.`First Name`, ' ',customers.`Last Name`) as `Customer Name` "
+            + "FROM orders, shop, customers,`Shop Type` as type  "
+            + "WHERE orders.`Shop ID` = shop.`Shop ID`  "
+            + "AND customers.`Customer ID` = orders.`Customer ID`  "
+		        + "AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE()  "
+            + "AND shop.`Shop Type ID` = type.`Shop Type ID`  "
+            + "AND type.type = 'Donations' "
+            + "Group By concat(customers.`First Name`, ' ', customers.`Last Name`) "
 
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
     // make the query
-    connection.query(sql, [data['Time'], data['Type']], function(err, results) {
+    connection.query(sql, data['Time'], function(err, results) {
       connection.release();
       if(err) { console.log(err); callback(true); return; }
       callback(false, results);
@@ -394,4 +400,4 @@ getTotalRevenueFromDateByDonations = function(data, callback){
   });
 }
 
-module.exports.getTotalRevenueFromDateByDonations = getTotalRevenueFromDateByDonations
+module.exports.getAllOrdersFromDateWithDonations = getAllOrdersFromDateWithDonations

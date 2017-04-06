@@ -112,6 +112,16 @@ module.exports = function(app, passport) {
         })
     })
 
+    app.post('/getAllOrdersFromDateWithDonations', function(req, res){
+        db.getAllOrdersFromDateWithDonations(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
     app.post('/getTotalOrderNumberByShopTypeID', function(req, res){
         db.getTotalOrderNumberByShopTypeID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
