@@ -116,7 +116,7 @@ function displayRevenueForShopTypes(date){
                                 }
                             } );
                         }
-                    }, 200);
+                    }, 400);
                 });
             
             }, this);        
@@ -154,11 +154,13 @@ function displayOrderNumbersForShops(date){
                             seriesOrderData.push(totalOrders);
                             var objBar = [];
                             seriesBarLabel.forEach(function(item, i) {
-                                var temp = {}
-                                temp["type"] = item;
-                                temp["order"] = seriesOrderData[i];
-                                temp['color'] = getRandomColor();
-                                objBar.push(temp);
+                                if(seriesOrderData[i] !== 0){
+                                    var temp = {}
+                                    temp["type"] = item;
+                                    temp["order"] = seriesOrderData[i];
+                                    temp['color'] = getRandomColor();
+                                    objBar.push(temp);
+                                }
                             });
 
                             chart = AmCharts.makeChart("barDiv", {
@@ -194,10 +196,10 @@ function displayOrderNumbersForShops(date){
                                     "enabled": false
                                 }
 
-                                });
+                            });
                         }
                     });
-                },300);
+                },400);
             });
         }
     });
@@ -236,15 +238,15 @@ $(document).ready(function(){
 
     setTimeout(function(){
         displayRevenueForShopTypes(30000)
-    }, 300);
+    }, 400);
 
     setTimeout(function(){
         displayOrderNumbersForShops(30000);
-    }, 300);
+    }, 400);
 
     setTimeout(function(){
         displayAllOrders(30000);
-    },300);
+    },400);
 
     
 });
