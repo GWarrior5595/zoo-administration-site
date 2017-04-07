@@ -58,7 +58,7 @@ $(document).ready(function(){
           processData: false,
           complete: function (data) {
               var jsonData = JSON.parse(data.responseText);   
-              document.getElementById("zoo-revenue").innerHTML = "$" + jsonData[0]['Revenue']
+              document.getElementById("zoo-revenue").innerHTML = "$" + Math.round(jsonData[0]['Revenue'])
           }
       });
       var id = {
@@ -72,7 +72,7 @@ $(document).ready(function(){
           data: JSON.stringify(id),
           complete: function (data) {
               var jsonData = JSON.parse(data.responseText);   
-              document.getElementById("zoo-visitors").innerHTML = (jsonData[0]['Revenue']/10)
+              document.getElementById("zoo-visitors").innerHTML = Math.round((jsonData[0]['Revenue']/10))
           }
       });
 
