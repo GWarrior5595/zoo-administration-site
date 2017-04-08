@@ -137,9 +137,20 @@
                               <div class="header">
                                 <h3 class="title">Donations Statistics</h3>
                                 <p class="category">(in millions)</p>
+                                <select id="pieDateSelect">
+                                  <option value="30000">From All Time</option>
+                                  <option value="0">From Today</option>                                  
+                                  <option value="7">From Last Week</option>
+                                  <option value="30">From Last Month</option>
+                                  <option value="365">From Last Year</option>
+                                </select>
                               </div>
                               <div class = "content">
                                 <div id="pieDiv"></div>
+                                <hr>
+                                <div class="stats">
+                                    <i class="ti-reload"></i> Updated Now
+                                </div>
                               </div>
                           </div>
                       </div>

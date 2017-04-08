@@ -10,6 +10,7 @@
     
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
         
@@ -46,7 +47,18 @@
                                 <p class="category">(in dollars)</p>                       
                                 </div>
                               <div class = "content">
+                                <select id="pieDateSelect">
+                                  <option value="30000">From All Time</option>
+                                  <option value="0">From Today</option>                                                                    
+                                  <option value="7">From Last Week</option>
+                                  <option value="30">From Last Month</option>
+                                  <option value="365">From Last Year</option>
+                                </select>                                
                                 <div id="pieDiv"></div>
+                                <hr>
+                                <div class="stats">
+                                    <i class="ti-reload"></i> Updated Now
+                                </div>
                               </div>
                           </div>
                         
@@ -59,7 +71,18 @@
                                   <h3 class="title">Number of Orders for each Shop</h3>                         
                                   </div>
                                 <div class = "content">
+                                  <select id="barDateSelect">
+                                    <option value="30000">From All Time</option>
+                                    <option value="0">From Today</option>                                                                      
+                                    <option value="7">From Last Week</option>
+                                    <option value="30">From Last Month</option>
+                                    <option value="365">From Last Year</option>
+                                  </select>
                                   <div id="barDiv"></div>
+                                  <hr>
+                                  <div class="stats">
+                                      <i class="ti-reload"></i> Updated Now
+                                  </div>
                                 </div>
                             </div>
                       </div>
@@ -71,8 +94,18 @@
                                 <h2 class="title">List of Orders</h2>
                             </div>
                             <div class="content">
-                                <div id="ordersTable">
-                                    
+                              <select id="tableDateSelect">
+                                  <option value="60">From Past Two Months</option>
+                                  <option value="0">From Today</option>                                  
+                                  <option value="7">From Last Week</option>
+                                  <option value="30">From Last Month</option>
+                                  <option value="365">From Last Year</option>
+                                  <option value="30000">From All Time</option>                                  
+                                </select>
+                                <div id="ordersTable"></div>
+                                <hr>
+                                <div class="stats">
+                                    <i class="ti-reload"></i> Updated Now
                                 </div>
                             </div>
                           </div>                              
