@@ -83,7 +83,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/getIDAndNameOfShops', function(req, res){
-        db.getIDAndNameOfShops(req.body, function(err, data){
+        db.getIDAndNameOfShops(function(err, data){
             if(err) {console.log("error"); return;}
             else{
                 //format data in here
@@ -212,7 +212,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/getIDAndNameOfEnclosures', function(req, res){
-        db.getIDAndNameOfEnclosures(req.body, function(err, data){
+        db.getIDAndNameOfEnclosures(function(err, data){
             if(err) {console.log("error"); return;}
             else{
                 //format data in here

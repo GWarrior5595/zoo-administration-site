@@ -116,7 +116,7 @@ function displayRevenueForShopTypes(date){
                                 }
                             } );
                         }
-                    }, 400);
+                    }, 600);
                 });
             
             }, this);        
@@ -199,7 +199,7 @@ function displayOrderNumbersForShops(date){
                             });
                         }
                     });
-                },400);
+                },600);
             });
         }
     });
@@ -238,11 +238,11 @@ $(document).ready(function(){
 
     setTimeout(function(){
         displayRevenueForShopTypes(30000)
-    }, 400);
+    }, 600);
 
     setTimeout(function(){
         displayOrderNumbersForShops(30000);
-    }, 400);
+    }, 500);
 
     setTimeout(function(){
         displayAllOrders(30000);

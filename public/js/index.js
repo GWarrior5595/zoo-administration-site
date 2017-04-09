@@ -51,71 +51,79 @@ $(document).ready(function(){
         $("#nav-placeholder").load("/navbar"); 
     });
 
-    $.ajax({
-          url: "/getRevenue",
-          type: "POST",
-          contentType: "application/json",
-          processData: false,
-          complete: function (data) {
-              var jsonData = JSON.parse(data.responseText);   
-              document.getElementById("zoo-revenue").innerHTML = "$" + Math.round(jsonData[0]['Revenue'])
-          }
-      });
-      var id = {
-          'Shop Type ID': 1 //hardcoded... for now
-      };
-    $.ajax({
-          url: "/getTotalRevenueByShopTypeID",
-          type: "POST",
-          contentType: "application/json",
-          processData: false,
-          data: JSON.stringify(id),
-          complete: function (data) {
-              var jsonData = JSON.parse(data.responseText);   
-              document.getElementById("zoo-visitors").innerHTML = Math.round((jsonData[0]['Revenue']/10))
-          }
-      });
-
-    var dataSales = {
-          labels: ['8:00AM', '10:00PM', '1:00PM', '3:00PM', '4:00PM'],
-          series: [
-             [287, 385, 490, 594, 512, 426],
-            [67, 152, 313, 287, 343, 315],
-            [23, 113, 130, 158, 240, 193]
-          ]
-        };
-
-    var optionsSales = {
-            lineSmooth: false,
-            low: 0,
-            high: 1000,
-            showArea: true,
-            height: "245px",
-            axisX: {
-            showGrid: false,
-        },
-            lineSmooth: Chartist.Interpolation.simple({
-                divisor: 3
-            }),
-        showLine: true,
-        showPoint: false,
-    };
-
-    var responsiveSales = [
-        ['screen and (max-width: 640px)', {
-        axisX: {
-            labelInterpolationFnc: function (value) {
-            return value[0];
+    setTimeout(function(){
+        $.ajax({
+            url: "/getRevenue",
+            type: "POST",
+            contentType: "application/json",
+            processData: false,
+            complete: function (data) {
+                var jsonData = JSON.parse(data.responseText);   
+                document.getElementById("zoo-revenue").innerHTML = "$" + Math.round(jsonData[0]['Revenue'])
             }
-        }
-        }]
-    ];
+        });
+    }, 300);
 
-    Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
+    setTimeout(function(){
+        var id = {
+            'Shop Type ID': 1 //hardcoded... for now for ticket booths
+        };
+        
+        $.ajax({
+            url: "/getTotalRevenueByShopTypeID",
+            type: "POST",
+            contentType: "application/json",
+            processData: false,
+            data: JSON.stringify(id),
+            complete: function (data) {
+                var jsonData = JSON.parse(data.responseText);   
+                document.getElementById("zoo-visitors").innerHTML = Math.round((jsonData[0]['Revenue']/10))
+            }
+        });
+    }, 100);
+
+    // var dataSales = {
+    //       labels: ['8:00AM', '10:00PM', '1:00PM', '3:00PM', '4:00PM'],
+    //       series: [
+    //          [287, 385, 490, 594, 512, 426],
+    //         [67, 152, 313, 287, 343, 315],
+    //         [23, 113, 130, 158, 240, 193]
+    //       ]
+    //     };
+
+    // var optionsSales = {
+    //         lineSmooth: false,
+    //         low: 0,
+    //         high: 1000,
+    //         showArea: true,
+    //         height: "245px",
+    //         axisX: {
+    //         showGrid: false,
+    //     },
+    //         lineSmooth: Chartist.Interpolation.simple({
+    //             divisor: 3
+    //         }),
+    //     showLine: true,
+    //     showPoint: false,
+    // };
+
+    // var responsiveSales = [
+    //     ['screen and (max-width: 640px)', {
+    //     axisX: {
+    //         labelInterpolationFnc: function (value) {
+    //         return value[0];
+    //         }
+    //     }
+    //     }]
+    // ];
+
+    // Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
     
 
     $('#pieDateSelect').on('change', function (e) {
         document.getElementById("pieDiv").innerHTML = "";
-        displayAllOrdersWithDonations(this.value)        
+        setTimeout(function(){
+            displayAllOrdersWithDonations(this.value)     
+        },300);   
     });        
 });

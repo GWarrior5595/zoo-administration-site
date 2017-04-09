@@ -72,7 +72,8 @@ function initializeEditEntry(element){
                         opt.id = shopsData[i]["Shop ID"]
                         sel.appendChild(opt);
                         if(employeeInfo[0]['Shop ID'] !== null && employeeInfo[0]['Shop ID'] === shopsData[i]["Shop ID"]) {
-                            $("#editShop").prop('selectedIndex', shopsData[i]["Shop ID"]);
+                            
+                            $("#editShop option:contains("+ shopsData[i]['Name']+ ")").prop('selected',true);
                                                       
                         }
                     }
@@ -100,7 +101,8 @@ function initializeEditEntry(element){
                         opt.id = enclosureData[i]["Enclosure"]
                         sel.appendChild(opt);
                         if(employeeInfo[0]['Enclosure ID'] !== null && employeeInfo[0]['Enclosure ID'] === enclosureData[i]["Enclosure"]) {
-                            $("#editEnclosure").prop('selectedIndex', enclosureData[i]["Enclosure"]);
+                            $("#editEnclosure option:contains("+ enclosureData[i]['Name']+ ")").prop('selected',true);
+                            
                                                                                    
                         }
                     }
@@ -410,8 +412,10 @@ $(document).ready(function(){
         },
         close: function () { }
     });
-
-    reloadEmployeeTable();
+    
+    setTimeout(function(){
+        reloadEmployeeTable();
+    },400);
 
   $('#user-first-name').keyup(function() { 
     var $rows = $('#dataTable tbody  tr');

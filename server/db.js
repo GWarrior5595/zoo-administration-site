@@ -90,7 +90,7 @@ getEmployeeByID = function(data, callback) {
 module.exports.getEmployeeByID = getEmployeeByID
 
 getIDAndNameOfShops = function(callback){
-  var sql = "SELECT `Shop ID`, `Name`"
+  var sql = "SELECT `Shop ID`, `Name` "
           + "FROM shop";
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
@@ -106,7 +106,7 @@ getIDAndNameOfShops = function(callback){
 module.exports.getIDAndNameOfShops = getIDAndNameOfShops
 
 getIDAndNameOfEnclosures = function(callback){
-  var sql = "SELECT `Enclosure`, `Name`"
+  var sql = "SELECT `Enclosure`, `Name` "
           + "FROM enclosure";
   pool.getConnection(function(err, connection) {
     if(err) { console.log(err); callback(true); return; }
