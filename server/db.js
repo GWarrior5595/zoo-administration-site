@@ -1,22 +1,12 @@
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
-  host: 'us-cdbr-iron-east-03.cleardb.net',
-  user: 'b3a58478f963a6',
-  password: 'e4081158',
-  database: 'heroku_db65f8e9326be4b'
+  host: process.env.CLEARDBHOSTNAME,
+  user: process.env.CLEARDBUSER,
+  password: process.env.CLEARDBPASSWORD,
+  database: process.env.CLEARDBDATABASE
 });
 
-// connection.connect();
-
-// connection.query('SELECT * from animals', function(err, rows, fields) {
-//   if (!err)
-//     console.log('The solution is: ', rows);
-//   else
-//     console.log('Error while performing Query.');
-// });
-
-// connection.end();
 
 getAllEmployees = function(callback) {
   var sql = "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "

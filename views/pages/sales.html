@@ -14,14 +14,15 @@
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
         
+
+    <link href="stylesheets/main.css" rel="stylesheet" />       
+            
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
     <link href="stylesheets/jquery.dynatable.css" rel="stylesheet" />    
     <link href="stylesheets/themify-icons.css" rel="stylesheet" type='text/css' />
-    <link href="stylesheets/paper-dashboard.css" rel="stylesheet" type='text/css' />    
     
     <script>
       $(function(){
@@ -30,7 +31,6 @@
     </script>
     
     
-    <link href="stylesheets/main.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -95,11 +95,11 @@
                             </div>
                             <div class="content">
                               <select id="tableDateSelect">
+                                  <option value="30000">From All Time</option>                                                                  
                                   <option value="0">From Today</option>                                  
                                   <option value="7">From Last Week</option>
                                   <option value="30">From Last Month</option>
                                   <option value="365">From Last Year</option>
-                                  <option value="30000">From All Time</option>                                  
                                 </select>
                                 <div id="ordersTable" class="table-responsive"></div>
                                 <hr>

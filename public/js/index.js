@@ -47,10 +47,11 @@ function displayAllOrdersWithDonations(date){
 
 $(document).ready(function(){
     displayAllOrdersWithDonations(60);    
-    $(function(){
-        $("#nav-placeholder").load("/navbar"); 
-    });
+    // $(function(){
+    //     $("#nav-placeholder").load("/navbar"); 
+    // });
 
+    
     setTimeout(function(){
         $.ajax({
             url: "/getRevenue",
@@ -121,9 +122,6 @@ $(document).ready(function(){
     
 
     $('#pieDateSelect').on('change', function (e) {
-        document.getElementById("pieDiv").innerHTML = "";
-        setTimeout(function(){
-            displayAllOrdersWithDonations(this.value)     
-        },300);   
+        displayAllOrdersWithDonations(this.value)     
     });        
 });

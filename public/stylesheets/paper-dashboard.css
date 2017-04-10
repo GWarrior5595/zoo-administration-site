@@ -29,10 +29,10 @@
 .ct-red {
   stroke: #EB5E28 !important; }
 
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, a, .td-name, td {
+/*h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, a, .td-name, td {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Muli', "Helvetica", Arial, sans-serif; }
+  font-family: 'Muli', "Helvetica", Arial, sans-serif; }*/
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
   font-weight: 400;
@@ -262,13 +262,14 @@ hr {
       line-height: 30px; }
   .sidebar .nav,
   .off-canvas-sidebar .nav {
-    margin-top: 20px; }
+    /*margin-top: 20px; */
+    }
     .sidebar .nav li > a,
-    .off-canvas-sidebar .nav li > a {
+    /*.off-canvas-sidebar .nav li > a {
       margin: 10px 0px;
       padding-left: 25px;
       padding-right: 25px;
-      opacity: .7; }
+      opacity: .7; }*/
     .sidebar .nav li:hover > a,
     .off-canvas-sidebar .nav li:hover > a {
       opacity: 1; }
@@ -305,12 +306,13 @@ hr {
       text-transform: uppercase; }
     .sidebar .nav i,
     .off-canvas-sidebar .nav i {
-      font-size: 24px;
+      /*font-size: 24px;
       float: left;
       margin-right: 15px;
       line-height: 30px;
       width: 30px;
-      text-align: center; }
+      text-align: center; */
+      }
   .sidebar:after, .sidebar:before,
   .off-canvas-sidebar:after,
   .off-canvas-sidebar:before {
@@ -341,10 +343,10 @@ hr {
     .off-canvas-sidebar .logo .simple-text,
     .off-canvas-sidebar[data-background-color="white"] .logo .simple-text {
       color: #66615B; }
-  .sidebar .nav li:not(.active) > a, .sidebar[data-background-color="white"] .nav li:not(.active) > a,
+  /*.sidebar .nav li:not(.active) > a, .sidebar[data-background-color="white"] .nav li:not(.active) > a,
   .off-canvas-sidebar .nav li:not(.active) > a,
   .off-canvas-sidebar[data-background-color="white"] .nav li:not(.active) > a {
-    color: #66615B; }
+    color: #66615B; }*/
   .sidebar .nav .divider, .sidebar[data-background-color="white"] .nav .divider,
   .off-canvas-sidebar .nav .divider,
   .off-canvas-sidebar[data-background-color="white"] .nav .divider {

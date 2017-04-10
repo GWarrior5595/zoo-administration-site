@@ -41,6 +41,7 @@ body {
 }
 
 .sidebar > .nav > li > a {
+    opacity: 1;
 	padding:15px 10px;
     color: #214761;
     font-weight: 900;

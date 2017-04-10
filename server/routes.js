@@ -34,10 +34,6 @@ module.exports = function(app, passport) {
     res.render("page4.html");
   });
 
-  app.get("/page5", isLoggedIn, function(req,res){
-    res.render("page5.html");
-  });
-
   // LOGOUT
   app.get('/logout', function(req, res) {
       req.logout();
@@ -45,7 +41,7 @@ module.exports = function(app, passport) {
   });
 
 // QUERIES WITH BUTTONS
-    app.post('/allEmployees', function(req, res){
+    app.post('/allEmployees', isLoggedIn, function(req, res){
         db.getAllEmployees(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -54,7 +50,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/allOrders', function(req, res){
+    app.post('/allOrders', isLoggedIn, function(req, res){
         db.getAllOrders(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -63,7 +59,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/getRevenue', function(req, res){
+    app.post('/getRevenue', isLoggedIn, function(req, res){
         db.getRevenueOfAllOrders(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -72,7 +68,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/searchEmployeeByID', function(req, res){
+    app.post('/searchEmployeeByID', isLoggedIn, function(req, res){
         db.getEmployeeByID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -82,7 +78,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/getIDAndNameOfShops', function(req, res){
+    app.post('/getIDAndNameOfShops', isLoggedIn, function(req, res){
         db.getIDAndNameOfShops(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -92,7 +88,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/getAllOrdersFromDate', function(req, res){
+    app.post('/getAllOrdersFromDate', isLoggedIn, function(req, res){
         db.getAllOrdersFromDate(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -102,7 +98,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/getTotalRevenueByShopTypeID', function(req, res){
+    app.post('/getTotalRevenueByShopTypeID', isLoggedIn, function(req, res){
         db.getTotalRevenueByShopTypeID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -112,7 +108,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getAllOrdersFromDateWithDonations', function(req, res){
+    app.post('/getAllOrdersFromDateWithDonations', isLoggedIn, function(req, res){
         db.getAllOrdersFromDateWithDonations(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -122,7 +118,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getTotalOrderNumberByShopTypeID', function(req, res){
+    app.post('/getTotalOrderNumberByShopTypeID', isLoggedIn, function(req, res){
         db.getTotalOrderNumberByShopTypeID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -132,7 +128,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getTotalRevenueFromDateByShopTypeID', function(req, res){
+    app.post('/getTotalRevenueFromDateByShopTypeID', isLoggedIn, function(req, res){
         db.getTotalRevenueFromDateByShopTypeID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -142,7 +138,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getTotalOrderNumberFromDateByShopID', function(req, res){
+    app.post('/getTotalOrderNumberFromDateByShopID', isLoggedIn, function(req, res){
         db.getTotalOrderNumberFromDateByShopID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -152,7 +148,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getTotalOrderNumberByShopID', function(req, res){
+    app.post('/getTotalOrderNumberByShopID', isLoggedIn, function(req, res){
         db.getTotalOrderNumberByShopID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -162,7 +158,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getAllShops', function(req, res){
+    app.post('/getAllShops', isLoggedIn, function(req, res){
         db.getAllShops(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -172,7 +168,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/getAllShopTypes', function(req, res){
+    app.post('/getAllShopTypes', isLoggedIn, function(req, res){
         db.getAllShopTypes(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -182,7 +178,7 @@ module.exports = function(app, passport) {
         })
     })
 
-    app.post('/addEmployee', function(req, res){
+    app.post('/addEmployee', isLoggedIn, function(req, res){
         db.insertEmployee(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -192,7 +188,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/editEmployeeByID/:id', function(req, res){
+    app.post('/editEmployeeByID/:id', isLoggedIn, function(req, res){
         db.editEmployeeByID(req.body, req.params.id, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -201,7 +197,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/deleteEmployee', function(req, res){
+    app.post('/deleteEmployee', isLoggedIn, function(req, res){
         db.deleteEmployeeByID(req.body, function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -211,7 +207,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/getIDAndNameOfEnclosures', function(req, res){
+    app.post('/getIDAndNameOfEnclosures', isLoggedIn, function(req, res){
         db.getIDAndNameOfEnclosures(function(err, data){
             if(err) {console.log("error"); return;}
             else{
@@ -248,7 +244,8 @@ module.exports = function(app, passport) {
   }));
 
   app.use(function (req, res, next) {
-    res.status(404).send("Sorry! Page not found!")
+    res.status(404).render("404page.html");
+    
   })
 };
 

@@ -20,7 +20,7 @@ function CreateTableFromJSON(myData) {
 
     // CREATE DYNAMIC TABLE.
     var table = document.createElement("table");
-    table.setAttribute("class", "table table-striped tablesorter");
+    table.setAttribute("class", "table table-striped");
     table.setAttribute('id', 'dataTable');
 
     // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
@@ -217,7 +217,6 @@ function displayAllOrders(date){
         data: JSON.stringify(id),
         complete: function (data) {
             CreateTableFromJSON(JSON.parse(data.responseText));   
-            //$("#dataTable").tablesorter();              
         }
     });
 }
