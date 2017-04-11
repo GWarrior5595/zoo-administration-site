@@ -273,12 +273,16 @@ function insertEmployee(){
     today = yyyy+"-"+mm+"-"+dd;
     var entry;
 
-    if(enclosure.options[enclosure.selectedIndex].id === ''){
+    var nullValue = null;
+
+
+    if(shop.options[shop.selectedIndex].id === '' && enclosure.options[enclosure.selectedIndex].id === ''){
         entry = {
             'Zoo ID': 1,
             'First Name': $("#firstName").val(),
             'Last Name': $("#lastName").val(),
-            'Shop ID': shop.options[shop.selectedIndex].id,
+            'Enclosure ID': nullValue,
+            'Shop ID': nullValue,                                    
             'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
             'Shifts': $("#shift").val(),
@@ -291,6 +295,20 @@ function insertEmployee(){
             'First Name': $("#firstName").val(),
             'Last Name': $("#lastName").val(),
             'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+            'Shop ID': nullValue,            
+            'Job Desciption': $("#jobDescription").val(),
+            'Hire Date': today,
+            'Shifts': $("#shift").val(),
+            'Salary': $("#salary").val()
+        };
+    }
+    else if(enclosure.options[enclosure.selectedIndex].id === ''){
+        entry = {
+            'Zoo ID': 1,
+            'First Name': $("#firstName").val(),
+            'Last Name': $("#lastName").val(),
+            'Shop ID': shop.options[shop.selectedIndex].id,
+            'Enclosure ID': nullValue,            
             'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
             'Shifts': $("#shift").val(),
@@ -340,11 +358,14 @@ $(document).ready(function(){
                 var shop = document.getElementById("editShop");
                 var entry;
 
-                if(enclosure.options[enclosure.selectedIndex].id === ''){
+                var nullValue = null;
+
+                if(shop.options[shop.selectedIndex].id === '' && enclosure.options[enclosure.selectedIndex].id === ''){
                     entry = {
                         'First Name': $("#editFirstName").val(),
                         'Last Name': $("#editLastName").val(),
-                        'Shop ID': shop.options[shop.selectedIndex].id,
+                        'Enclosure ID': nullValue,
+                        'Shop ID': nullValue,                                    
                         'Job Desciption': $("#editJobDescription").val(),
                         'Shifts': $("#editShift").val(),
                         'Salary': $("#editSalary").val()
@@ -355,6 +376,18 @@ $(document).ready(function(){
                         'First Name': $("#editFirstName").val(),
                         'Last Name': $("#editLastName").val(),
                         'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+                        'Shop ID': nullValue,                                    
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
+                }
+                else if(enclosure.options[enclosure.selectedIndex].id === ''){                    
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Shop ID': shop.options[shop.selectedIndex].id,
+                        'Enclosure ID': nullValue,                                    
                         'Job Desciption': $("#editJobDescription").val(),
                         'Shifts': $("#editShift").val(),
                         'Salary': $("#editSalary").val()

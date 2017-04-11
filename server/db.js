@@ -9,24 +9,30 @@ var pool = mysql.createPool({
 
 
 getAllEmployees = function(callback) {
-  var sql = "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+  var sql = "SELECT DISTINCT employee.`Employee ID`, concat(employee.`First Name`, ' ',employee.`Last Name`) as `Employee Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM employee, shop "
           + "WHERE employee.`Shop ID` = shop.`Shop ID` "
           + "AND employee.`Enclosure ID` IS NULL "
 
           + "UNION ALL "
 
-          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, '' as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+          + "SELECT DISTINCT employee.`Employee ID`, concat(employee.`First Name`, ' ',employee.`Last Name`) as `Employee Name`, enclosure.`Name` as `Enclosure Name`, '' as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM enclosure, employee "
            + "WHERE employee.`Enclosure ID` = enclosure.`Enclosure` "
           + "AND employee.`Shop ID` IS NULL "
           
           + "UNION ALL "
 			
-          + "SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, enclosure.`Name` as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+          + "SELECT DISTINCT employee.`Employee ID`, concat(employee.`First Name`, ' ',employee.`Last Name`) as `Employee Name`, enclosure.`Name` as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
           + "FROM enclosure, employee, shop "
           + "WHERE employee.`Enclosure ID` IS NOT NULL AND employee.`Shop ID` IS NOT NULL AND employee.`Enclosure ID` = enclosure.`Enclosure` AND employee.`Shop ID` = shop.`Shop ID` "
           
+          + "UNION ALL "
+          
+          + "SELECT DISTINCT employee.`Employee ID`, concat(employee.`First Name`, ' ',employee.`Last Name`) as `Employee Name`, '' as `Enclosure Name`, '' as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+          + "FROM enclosure, employee, shop "
+          + "WHERE employee.`Enclosure ID` IS NULL AND employee.`Shop ID` IS NULL "
+
           + "ORDER BY `Employee ID` "
 
   // get a connection from the pool
