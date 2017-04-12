@@ -22,8 +22,8 @@ module.exports = function(app, passport) {
     res.render("employee.html");
   });
 
-  app.get("/page2", isLoggedIn, function(req,res){
-    res.render("page2.html");
+  app.get("/animals", isLoggedIn, function(req,res){
+    res.render("animals.html");
   });
 
   app.get("/sales", isLoggedIn, function(req,res){
@@ -216,6 +216,121 @@ module.exports = function(app, passport) {
             }
         });
     });
+
+    app.post('/getAllAnimal', function(req, res){
+        db.getAllAnimal(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/searchAnimalByID', function(req, res){
+        db.getAnimalByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/deleteAnimal', function(req, res){
+        db.deleteAnimalByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal deleted from database');
+            }
+        });
+    });
+
+    app.post('/deleteExhibit', function(req, res){
+        db.deleteExhibitByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Exhibit deleted from database');
+            }
+        });
+    });
+
+    app.post('/deleteEnclosure', function(req, res){
+        db.deleteEnclosureByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Enclosure deleted from database');
+            }
+        });
+    });
+
+    app.post('/deleteAnimalType', function(req, res){
+        db.deleteAnimalTypesByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal Type deleted from database');
+            }
+        });
+    });
+
+    app.post('/deleteAnimalDietType', function(req, res){
+        db.deleteAnimalDietTypesByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal Diet Type deleted from database');
+            }
+        });
+    });
+
+
+
+
+    app.post('/getAllExhibit', function(req, res){
+        db.getAllExhibit(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/getAllEnclosure', function(req, res){
+        db.getAllEnclosure(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/getAllAnimalTypes', function(req, res){
+        db.getAllAnimalTypes(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+
+    app.post('/getAllAnimalDietTypes', function(req, res){
+        db.getAllAnimalDietTypes(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
 
 // AUTHENTICATE
   // show the login form

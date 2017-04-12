@@ -397,3 +397,196 @@ getAllOrdersFromDateWithDonations = function(data, callback){
 }
 
 module.exports.getAllOrdersFromDateWithDonations = getAllOrdersFromDateWithDonations
+
+getAllAnimal = function(callback){
+    var sql = "Select animals.`Animal ID`, exhibit.Description as `Exhibit Name`, animals.Name, animals.Description, `diet type`.`Name` as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Gender`"
+        + "FROM animals, exhibit, `diet type`, `animal type` "
+        + "WHERE animals.`Exhibit ID` = exhibit.`Exhibit ID` AND animals.`Diet Type ID` = `diet type`.`Diet Type ID` AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
+
+        + "Order By `Animal ID` "
+    /*"SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
+     + "FROM employee, shop "
+     + "WHERE employee.`Shop ID` = shop.`Shop ID` "
+     + "AND employee.`Enclosure ID` IS NULL "*/
+    /* "Select DISTINCT animals.`Animal ID`, '' as `Exhibit Name`, animals.`Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, '' as `Animal Type` , animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender` "
+     + "FROM animals, ``diet type` "
+     + "WHERE animals.`Diet Type ID` = `diet type`.`Diet Type ID` "
+     + "AND animals.`Exhibit ID` is NULL "
+     + "AND animals.`Animal Type ID` is NULL "*/
+
+
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.getAllAnimal =  getAllAnimal
+
+getAnimalByID = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "SELECT * from animals WHERE `Animal ID`=?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data["Animal ID"], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+module.exports.getAnimalByID = getAnimalByID
+
+deleteAnimalByID = function(data, callback){
+    var sql = "DELETE from animals "
+        + "WHERE `Animal ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Animal ID'], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.deleteAnimalByID = deleteAnimalByID
+
+getAllExhibit = function(callback){
+    var sql = "SELECT exhibit.`Exhibit ID`, exhibit.`Description`"
+        +"FROM `Exhibit`;"
+
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.getAllExhibit =  getAllExhibit
+
+deleteExhibitByID = function(data, callback){
+    var sql = "DELETE from exhibit "
+        + "WHERE `Exhibit ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Exhibit ID'], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.deleteExhibitByID = deleteExhibitByID
+
+getAllEnclosure = function(callback){
+    var sql = "Select enclosure.`Enclosure` as `Enclosure ID`, exhibit.`Description` as `Exhibit Name`, enclosure.`Name`, enclosure.`Description`, enclosure.`Location`, enclosure.`Capacity`, enclosure.`Feeding Allowed`"
+        +"FROM enclosure, exhibit "
+        +"WHERE enclosure.`Exhibit ID` = exhibit.`Exhibit ID`;"
+
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.getAllEnclosure =  getAllEnclosure
+
+deleteEnclosureByID = function(data, callback){
+    var sql = "DELETE from enclosure "
+        + "WHERE `Enclosure ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Enclosure ID'], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.deleteEnclosureByID = deleteEnclosureByID
+
+getAllAnimalTypes = function(callback){
+    var sql = "Select * From `animal type`"
+
+
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.getAllAnimalTypes =  getAllAnimalTypes
+
+deleteAnimalTypesByID = function(data, callback){
+    var sql = "DELETE from `animal type` "
+        + "WHERE `Animal Type ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Animal Type ID'], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.deleteAnimalTypesByID = deleteAnimalTypesByID
+
+getAllAnimalDietTypes = function(callback){
+    var sql = "SELECT * FROM `diet type` "
+
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.getAllAnimalDietTypes =  getAllAnimalDietTypes
+
+deleteAnimalDietTypesByID = function(data, callback){
+    var sql = "DELETE from `diet type` "
+        + "WHERE `Diet Type ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Diet Type ID'], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.deleteAnimalDietTypesByID = deleteAnimalDietTypesByID
