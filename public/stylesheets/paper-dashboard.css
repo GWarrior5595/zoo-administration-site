@@ -2292,11 +2292,11 @@ textarea.form-control {
     padding-right: 15px; } }
 /*          Changes for small display      */
 @media (max-width: 991px) {
-  .sidebar {
-    display: none; }
+  /*.sidebar {
+    display: none; }*/
 
-  .main-panel {
-    width: 100%; }
+  /*.main-panel {
+    width: 100%; }*/
 
   .navbar-transparent {
     padding-top: 15px;
