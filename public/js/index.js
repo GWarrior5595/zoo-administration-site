@@ -46,7 +46,7 @@ function displayAllOrdersWithDonations(date){
 }
 
 $(document).ready(function(){
-    displayAllOrdersWithDonations(60);    
+    displayAllOrdersWithDonations(30000);    
     // $(function(){
     //     $("#nav-placeholder").load("/navbar"); 
     // });
