@@ -399,7 +399,7 @@ getAllOrdersFromDateWithDonations = function(data, callback){
 module.exports.getAllOrdersFromDateWithDonations = getAllOrdersFromDateWithDonations
 
 getAllAnimal = function(callback){
-    var sql = "Select animals.`Animal ID`, exhibit.Description as `Exhibit Name`, animals.Name, animals.Description, `diet type`.`Name` as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Gender`"
+    var sql = "Select animals.`Animal ID`, exhibit.Description as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Gender`"
         + "FROM animals, exhibit, `diet type`, `animal type` "
         + "WHERE animals.`Exhibit ID` = exhibit.`Exhibit ID` AND animals.`Diet Type ID` = `diet type`.`Diet Type ID` AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
 
@@ -493,7 +493,7 @@ deleteExhibitByID = function(data, callback){
 module.exports.deleteExhibitByID = deleteExhibitByID
 
 getAllEnclosure = function(callback){
-    var sql = "Select enclosure.`Enclosure` as `Enclosure ID`, exhibit.`Description` as `Exhibit Name`, enclosure.`Name`, enclosure.`Description`, enclosure.`Location`, enclosure.`Capacity`, enclosure.`Feeding Allowed`"
+    var sql = "Select enclosure.`Enclosure` as `Enclosure ID`, exhibit.`Description` as `Exhibit Name`, enclosure.`Name` as `Enclosure Name`, enclosure.`Description`, enclosure.`Location`, enclosure.`Capacity`, enclosure.`Feeding Allowed`"
         +"FROM enclosure, exhibit "
         +"WHERE enclosure.`Exhibit ID` = exhibit.`Exhibit ID`;"
 

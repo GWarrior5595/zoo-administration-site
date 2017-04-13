@@ -1,9 +1,7 @@
-/**
- * Created by samad on 4/9/2017.
- */
-function deleteEntry(element){
+
+function deleteAnimal(animal){
     var id = {
-        'Animal ID': element.id
+        'Animal ID': animal.id
     };
     var confirmationPopup = confirm("Are you sure you want to delete this Animal?");
     //if user clicks "OK" when asked if they want to delete employee
@@ -18,11 +16,14 @@ function deleteEntry(element){
             complete: function (animal) {
                 $('#output').html(animal.responseText);
                 reloadAnimalTable();
+
             }
         });
     }
 
 }
+
+
 
 
 
@@ -85,9 +86,11 @@ function CreateAnimalTableFromJSON(myData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEntry(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteAnimal(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
 
+    //delete previous table
+    $("#animalTable").remove();
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
     var divContainer = document.getElementById("showAnimal");

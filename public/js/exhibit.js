@@ -1,8 +1,8 @@
-function deleteEntry(element){
+function deleteExhibit(exhibit){
     var id = {
-        'Exhibit ID': element.id
+        'Exhibit ID': exhibit.id
     };
-    var confirmationPopup = confirm("Are you sure you want to delete this Animal?");
+    var confirmationPopup = confirm("Are you sure you want to delete this Exhibit?");
     //if user clicks "OK" when asked if they want to delete employee
     if (confirmationPopup)
     {
@@ -12,8 +12,8 @@ function deleteEntry(element){
             contentType: "application/json",
             processData: false,
             data: JSON.stringify(id),
-            complete: function (data) {
-                $('#output').html(data.responseText);
+            complete: function (exhibit) {
+                $('#output').html(exhibit.responseText);
                 reloadExhibitTable();
             }
         });
@@ -62,7 +62,6 @@ function CreateExhibitTableFromJSON(oneData) {
         var th = document.createElement("th");      // TABLE HEADER.
 
         th.innerHTML = col[i];
-        th.setAttribute('data-dynatable-column', col[i])
         trheader.appendChild(th);
 
     }
@@ -81,19 +80,18 @@ function CreateExhibitTableFromJSON(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEntry(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteExhibit(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
+
+    //delete previous table
+    $("#exhibitTable").remove();
 
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
     var divContainer = document.getElementById("showExhibit");
     divContainer.appendChild(table);
 
-    $('#exhibitTable').dynatable({
-        dataset: {
-            records: oneData
-        }
-    });
+
 
     $("#exhibitTable").tablesorter();
 }

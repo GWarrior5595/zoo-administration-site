@@ -1,6 +1,6 @@
-function deleteEntry(element){
+function deleteEnclosure(enclosure){
     var id = {
-        'Enclosure ID': element.id
+        'Enclosure ID': enclosure.id
     };
     var confirmationPopup = confirm("Are you sure you want to delete this Enclosure?");
     //if user clicks "OK" when asked if they want to delete employee
@@ -62,7 +62,6 @@ function CreateEnclosureJSONTable(oneData) {
         var th = document.createElement("th");      // TABLE HEADER.
 
         th.innerHTML = col[i];
-        th.setAttribute('data-dynatable-column', col[i])
         trheader.appendChild(th);
 
     }
@@ -81,19 +80,17 @@ function CreateEnclosureJSONTable(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEntry(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEnclosure(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
 
+
+    //delete previous table
+    $("#enclosureTable").remove();
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
     var divContainer = document.getElementById("showEnclosure");
     divContainer.appendChild(table);
 
-    $('#enclosureTable').dynatable({
-        dataset: {
-            records: oneData
-        }
-    });
 
     $("#enclosureTable").tablesorter();
 }

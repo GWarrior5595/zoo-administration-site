@@ -1,6 +1,6 @@
-function deleteEntry(element){
+function deleteDiet(diet){
     var id = {
-        'Diet Type ID': element.id
+        'Diet Type ID': diet.id
     };
     var confirmationPopup = confirm("Are you sure you want to delete this Diet Type?");
     //if user clicks "OK" when asked if they want to delete employee
@@ -62,7 +62,6 @@ function CreateDietTableFromJSON(oneData) {
         var th = document.createElement("th");      // TABLE HEADER.
 
         th.innerHTML = col[i];
-        th.setAttribute('data-dynatable-column', col[i])
         trheader.appendChild(th);
 
     }
@@ -81,19 +80,17 @@ function CreateDietTableFromJSON(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEntry(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteDiet(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
+
+    //delete previous table
+    $("#dietTable").remove();
 
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
     var divContainer = document.getElementById("showDiet");
     divContainer.appendChild(table);
 
-    $('#dietTable').dynatable({
-        dataset: {
-            records: oneData
-        }
-    });
 
     $("#dietTable").tablesorter();
 }

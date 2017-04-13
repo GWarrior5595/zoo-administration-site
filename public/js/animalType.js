@@ -1,6 +1,6 @@
-function deleteEntry(element){
+function deleteAnimalType(animals){
     var id = {
-        'Animal Type ID': element.id
+        'Animal Type ID': animals.id
     };
     var confirmationPopup = confirm("Are you sure you want to delete this Animal Type?");
     //if user clicks "OK" when asked if they want to delete employee
@@ -62,7 +62,6 @@ function CreateAnimalTypeJSONTable(oneData) {
         var th = document.createElement("th");      // TABLE HEADER.
 
         th.innerHTML = col[i];
-        th.setAttribute('data-dynatable-column', col[i])
         trheader.appendChild(th);
 
     }
@@ -81,19 +80,17 @@ function CreateAnimalTypeJSONTable(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteEntry(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteAnimalType(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
+
+    //delete previous table
+    $("#animalsTable").remove();
 
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
     var divContainer = document.getElementById("showAnimalType");
     divContainer.appendChild(table);
 
-    $('#animalsTable').dynatable({
-        dataset: {
-            records: oneData
-        }
-    });
 
     $("#animalsTable").tablesorter();
 }
