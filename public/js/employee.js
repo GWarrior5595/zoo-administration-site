@@ -412,6 +412,8 @@ $(document).ready(function(){
                     data: JSON.stringify(entry),
                     complete: function (data) {
                         $('#output').html(data.responseText);
+                        console.log(entry)
+
                     }
                 });
                 

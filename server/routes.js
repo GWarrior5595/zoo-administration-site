@@ -30,9 +30,11 @@ module.exports = function(app, passport) {
     res.render("sales.html");
   });
 
-  app.get("/page4", isLoggedIn, function(req,res){
-    res.render("page4.html");
-  });
+    app.get("/check", isLoggedIn, function(req,res){
+        res.render("check.html");
+    });
+
+
 
   // LOGOUT
   app.get('/logout', function(req, res) {
@@ -331,6 +333,64 @@ module.exports = function(app, passport) {
         })
     })
 
+    app.post('/searchAnimalByID', isLoggedIn, function(req, res){
+        db.getEmployeeByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/getIDAndNameOfExhibit', isLoggedIn, function(req, res){
+        db.getIDAndNameOfExhibit(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/getIDAndNameOfDietType', isLoggedIn, function(req, res){
+        db.getIDAndNameOfDietType(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/getIDAndNameOfAnimalType', isLoggedIn, function(req, res){
+        db.getIDAndNameOfAnimalType(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/editAnimalByID/:id', isLoggedIn, function(req, res){
+        db.editAnimalByID(req.body, req.params.id, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                res.send('Animal edited to database');
+            }
+        });
+    });
+
+    app.post('/addAnimal', isLoggedIn, function(req, res){
+        db.insertAnimal(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal added to database with ID: ' + data.insertId);
+            }
+        });
+    });
 
 // AUTHENTICATE
   // show the login form

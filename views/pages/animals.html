@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>jQuery UI Tabs - Default functionality</title>
+    <title>Zoo Administration Site</title>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -85,8 +85,98 @@
                                 <div class='header'>
                                     <h3 class='title'> Animals</h3>
                                     Search: <input id="animal-name" type="text"/>
+
+                                    <button type="button" style="float: right"onclick="initializeInsertAnimalFields()" class ="btn btn-default btn-md" id="addAnimal">Add Animal!</button>
+
                                     <div id="showAnimal"></div>
                                 </div>
+                                <div id="dialog-form-edit" title="Edit Animal">
+                                    <form>
+                                        <fieldset>
+                                            <p id="editedAnimalID"></p>
+                                            <label for="editAnimalName">Animal Name</label>
+                                            <input type="text" name="editAnimalName" id="editAnimalName" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editDescription">Description</label>
+                                            <input type="text" name="editDescription" id="editDescription" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editAge">Age</label>
+                                            <input type="text" name="editAge" id="editAge" value="" class="text ui-widget-content ui-corner-all"/>
+                                            <br>
+                                            <label for="editWeight">Weight</label>
+                                            <input type="text" name="editWeight" id="editWeight" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editHeight">Height</label>
+                                            <input type="text" name="editHeight" id="editHeight" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editGender">Gender</label>
+                                            <input type="text" name="editGender" id="editGender" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editExhibit">Exhibit</label>
+                                            <select id="editExhibit">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="editDietType">Diet Type</label>
+                                            <select id="editDietType">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="editAnimalType">Animal Type</label>
+                                            <select id="editAnimalType">
+
+                                            </select>
+                                            <br>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+
+                                <div id="dialog-form-insert" title="Insert Animal">
+                                    <form>
+                                        <fieldset>
+                                            <label for="animalName">Animal Name</label>
+                                            <input type="text" name="animalName" id="animalName" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="description">Description</label>
+                                            <input type="text" name="description" id="description" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="age">Age</label>
+                                            <input type="text" name="age" id="age" value="" class="text ui-widget-content ui-corner-all"/>
+                                            <br>
+                                            <label for="weight">Weight</label>
+                                            <input type="text" name="weight" id="weight" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="height">Height</label>
+                                            <input type="text" name="height" id="height" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="gender">Gender</label>
+                                            <input type="text" name="gender" id="gender" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="exhibit">Exhibit Name</label>
+                                            <select id="exhibit">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="dietType">Diet Type</label>
+                                            <select id="dietType">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="animalType">Animal Type</label>
+                                            <select id="animalType">
+
+                                            </select>
+                                            <br>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+
                             </div>
 
                         </div>
