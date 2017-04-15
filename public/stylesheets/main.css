@@ -72,6 +72,11 @@ body {
 .nav > li > a > i {
     margin-right:10px;
 }
+
+div#tabs{
+    width: auto;
+}
+
 .logout-spn {
     float:right;
     color:#fff;
@@ -112,12 +117,6 @@ body {
 #pieDiv, #barDiv {
   width: 100%;
   height: 500px;
-}
-
-#navbar-title {
-    font-size: 20px;
-    padding-top: 25px;
-    color: white
 }
 
 /*==============================================

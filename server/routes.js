@@ -30,9 +30,11 @@ module.exports = function(app, passport) {
     res.render("sales.html");
   });
 
-  app.get("/zoos", isLoggedIn, function(req,res){
-    res.render("zoos.html");
-  });
+    app.get("/zoos", isLoggedIn, function(req,res){
+        res.render("zoos.html");
+    });
+
+
 
   // LOGOUT
   app.get('/logout', function(req, res) {
@@ -331,8 +333,123 @@ module.exports = function(app, passport) {
         })
     })
 
+    app.post('/searchAnimalByID', isLoggedIn, function(req, res){
+        db.getEmployeeByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
 
-//zoos
+    app.post('/getIDAndNameOfExhibit', isLoggedIn, function(req, res){
+        db.getIDAndNameOfExhibit(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/getIDAndNameOfDietType', isLoggedIn, function(req, res){
+        db.getIDAndNameOfDietType(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/getIDAndNameOfAnimalType', isLoggedIn, function(req, res){
+        db.getIDAndNameOfAnimalType(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/editAnimalByID/:id', isLoggedIn, function(req, res){
+        db.editAnimalByID(req.body, req.params.id, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                res.send('Animal edited to database');
+            }
+        });
+    });
+
+    app.post('/addAnimal', isLoggedIn, function(req, res){
+        db.insertAnimal(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addAnimalType', isLoggedIn, function(req, res){
+        db.insertAnimalType(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal Type added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addAnimalDietType', isLoggedIn, function(req, res){
+        db.insertAnimalDietType(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal Diet Type added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addExhibit', isLoggedIn, function(req, res){
+        db.insertExhibit(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Exhibit added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addEnclosure', isLoggedIn, function(req, res){
+        db.insertEnclosure(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Enclosure added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/searchEnclosureByID', function(req, res){
+        db.getEnclosureByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/editEnclosureByID/:id', isLoggedIn, function(req, res){
+        db.editEnclosureByID(req.body, req.params.id, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                res.send('Enclosure edited to database');
+            }
+        });
+    });
 
     app.post('/getAllZoos', function(req, res){
         db.getAllZoos(function(err, data){
@@ -343,6 +460,16 @@ module.exports = function(app, passport) {
             }
         })
     })
+
+    app.post('/addZoo', isLoggedIn, function(req, res){
+        db.insertEmployee(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('User added to database with ID: ' + data.insertId);
+            }
+        });
+    });
 
     app.post('/searchZooByID', function(req, res){
         db.getZooByID(req.body, function(err, data){
@@ -363,8 +490,6 @@ module.exports = function(app, passport) {
             }
         });
     });
-
-
 
 // AUTHENTICATE
   // show the login form

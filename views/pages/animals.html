@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zoo Administration Site</title>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -18,13 +19,12 @@
     <script type="text/javascript" src="js/animalType.js"></script>
 
 
-    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
-
 
 
     <script src="js/jquery.tablesorter.min.js"></script>
 
     <link href="stylesheets/main.css" rel="stylesheet" />
+    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
 
     <script>
         $( function() {
@@ -47,20 +47,33 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <div id="tabs">
+                    <div id="tabs" class="table-responsive">
                         <ul>
                             <li><a href="#tabs-1">Exhibits</a></li>
                             <li><a href="#tabs-2">Enclosures</a></li>
                             <li><a href="#tabs-3">Animals</a></li>
-                            <li><a href="#tabs-4">Animals Type</a></li>
-                            <li><a href="#tabs-5">Animals Diet Type</a></li>
+                            <li><a href="#tabs-4">Animal Types</a></li>
+                            <li><a href="#tabs-5">Animals Diet Types</a></li>
                         </ul>
-                        <div id="tabs-1">
+                        <div id="tabs-1" class="table-responsive">
                             <div class='card'>
                                 <div class='header'>
                                     <h3 class='title'> Exhibits</h3>
+
                                     Search: <input id="exhibit-name" type="text"/>
+                                    <button type="button" style="float: right"onclick="initializeInsertExhibitFields()" class ="btn btn-default btn-md" id="addExhibit">Add Exhibit!</button>
+
                                     <div id="showExhibit" class="table-responsive"></div>
+                                    <div id="exhibit-form-insert" title="Insert Exhibit">
+                                        <form>
+                                            <fieldset>
+                                                <label for="exhibitDescription">Exhibit Name</label>
+                                                <input type="text" name="exhibitDescription" id="exhibitDescription" value="" class="text ui-widget-content ui-corner-all" />
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -72,8 +85,73 @@
                             <div class='card'>
                                 <div class='header'>
                                     <h3 class='title'> Enclosures</h3>
+                                    <p style="color: red"id="output"></p>
+                                </div>
+                                <!--<button type="button" class ="btn btn-default btn-sm" id="allEmployees">Click me to display all employees!</button>-->
+                                <div class='content'>
                                     Search: <input id="enclosure-name" type="text"/>
-                                    <div id="showEnclosure" class="table-responsive"></div>
+                                    <button type="button" style="float: right"onclick="initializeInsertEnclosureFields()" class ="btn btn-default btn-md" id="addEnclosure">Add Enclosure!</button>
+
+                                    <div id="showEnclosure"></div>
+                                    <div id="enclosure-form-edit" title="Insert Enclosure">
+                                        <form>
+                                            <fieldset>
+                                                <p id="editedEnclosureID"></p>
+                                                <label for="editEnclosureName">Animal Name</label>
+                                                <input type="text" name="editEnclosureName" id="editEnclosureName" value="" class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <label for="editEnclosureDescription">Description</label>
+                                                <input type="text" name="editEnclosureDescription" id="editEnclosureDescription" value="" class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <label for="editEnclosureLocation">Location</label>
+                                                <input type="text" name="editEnclosureLocation" id="editEnclosureLocation" value="" class="text ui-widget-content ui-corner-all"/>
+                                                <br>
+                                                <label for="editEnclosureCapacity">Capacity</label>
+                                                <input type="number" name="editEnclosureCapacity" id="editEnclosureCapacity" value=""class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <input type="checkbox" name="editEnclosureFeeding" value="0" id="editEnclosureFeeding"
+                                                       checked="checked"> <label for="editEnclosureFeeding">Feeding?</label>
+                                                <br>
+
+                                                <label for="editEnclosureExhibit">Exhibit</label>
+                                                <select id="editEnclosureExhibit">
+
+
+                                                </select>
+                                                <br>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div id="enclosure-form-insert" title="Insert Enclosure">
+                                        <form>
+                                            <fieldset>
+                                                <label for="enclosureName">Animal Name</label>
+                                                <input type="text" name="enclosureName" id="enclosureName" value="" class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <label for="enclosureDescription">Description</label>
+                                                <input type="text" name="enclosureDescription" id="enclosureDescription" value="" class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <label for="enclosureLocation">Location</label>
+                                                <input type="text" name="enclosureLocation" id="enclosureLocation" value="" class="text ui-widget-content ui-corner-all"/>
+                                                <br>
+                                                <label for="enclosureCapacity">Capacity</label>
+                                                <input type="number" name="enclosureCapacity" id="enclosureCapacity" value=""class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <input type="checkbox" name="enclosureFeeding" value="0" id="enclosureFeeding"
+                                                       checked="checked"> <label for="enclosureFeeding">Feeding?</label>
+                                                <br>
+
+                                                <label for="enclosureExhibit">Exhibit</label>
+                                                <select id="enclosureExhibit">
+
+
+                                                </select>
+                                                <br>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
 
@@ -84,8 +162,98 @@
                                 <div class='header'>
                                     <h3 class='title'> Animals</h3>
                                     Search: <input id="animal-name" type="text"/>
-                                    <div id="showAnimal" class="table-responsive"></div>
+
+                                    <button type="button" style="float: right"onclick="initializeInsertAnimalFields()" class ="btn btn-default btn-md" id="addAnimal">Add Animal!</button>
+
+                                    <div id="showAnimal"></div>
                                 </div>
+                                <div id="dialog-form-edit" title="Edit Animal">
+                                    <form>
+                                        <fieldset>
+                                            <p id="editedAnimalID"></p>
+                                            <label for="editAnimalName">Animal Name</label>
+                                            <input type="text" name="editAnimalName" id="editAnimalName" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editDescription">Description</label>
+                                            <input type="text" name="editDescription" id="editDescription" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editAge">Age</label>
+                                            <input type="text" name="editAge" id="editAge" value="" class="text ui-widget-content ui-corner-all"/>
+                                            <br>
+                                            <label for="editWeight">Weight</label>
+                                            <input type="text" name="editWeight" id="editWeight" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editHeight">Height</label>
+                                            <input type="text" name="editHeight" id="editHeight" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editGender">Gender</label>
+                                            <input type="text" name="editGender" id="editGender" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="editExhibit">Exhibit</label>
+                                            <select id="editExhibit">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="editDietType">Diet Type</label>
+                                            <select id="editDietType">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="editAnimalType">Animal Type</label>
+                                            <select id="editAnimalType">
+
+                                            </select>
+                                            <br>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+
+                                <div id="dialog-form-insert" title="Insert Animal">
+                                    <form>
+                                        <fieldset>
+                                            <label for="animalName">Animal Name</label>
+                                            <input type="text" name="animalName" id="animalName" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="description">Description</label>
+                                            <input type="text" name="description" id="description" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="age">Age</label>
+                                            <input type="text" name="age" id="age" value="" class="text ui-widget-content ui-corner-all"/>
+                                            <br>
+                                            <label for="weight">Weight</label>
+                                            <input type="text" name="weight" id="weight" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="height">Height</label>
+                                            <input type="text" name="height" id="height" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="gender">Gender</label>
+                                            <input type="text" name="gender" id="gender" value=""class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="exhibit">Exhibit Name</label>
+                                            <select id="exhibit">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="dietType">Diet Type</label>
+                                            <select id="dietType">
+
+                                            </select>
+                                            <br>
+
+                                            <label for="animalType">Animal Type</label>
+                                            <select id="animalType">
+
+                                            </select>
+                                            <br>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+
                             </div>
 
                         </div>
@@ -96,7 +264,22 @@
                                 <div class='header'>
                                     <h3 class='title'> Animal Types</h3>
                                     Search: <input id="animals-name" type="text"/>
-                                    <div id="showAnimalType" class="table-responsive"></div>
+                                    <button type="button" style="float: right"onclick="initializeInsertAnimalTypeFields()" class ="btn btn-default btn-md" id="addAnimalType">Add Animal Type!</button>
+
+                                    <div id="showAnimalType"></div>
+                                    <div id="type-form-insert" title="Insert Animal Type">
+                                        <form>
+                                            <fieldset>
+                                                <label for="animalTypeName">Animal Type Name</label>
+                                                <input type="text" name="animalTypeName" id="animalTypeName" value="" class="text ui-widget-content ui-corner-all" />
+                                                <br>
+                                                <label for="animalTypeDescription">Description</label>
+                                                <input type="text" name="animalTypeDescription" id="animalTypeDescription" value="" class="text ui-widget-content ui-corner-all" />
+                                                <br>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
 
@@ -106,7 +289,26 @@
                             <div class='header'>
                                 <h3 class='title'> Animal Diet Types</h3>
                                 Search: <input id="diet-name" type="text"/>
-                                <div id="showDiet" class="table-responsive"></div>
+                                <button type="button" style="float: right"onclick="initializeInsertAnimalDietTypeFields()" class ="btn btn-default btn-md" id="addAnimalDietType">Add Animal Diet Type!</button>
+
+                                <div id="showDiet"></div>
+                                <div id="diet-form-insert" title="Insert Animal Diet Type">
+                                    <form>
+                                        <fieldset>
+                                            <label for="animalDietTypeName">Diet Name</label>
+                                            <input type="text" name="animalDietTypeName" id="animalDietTypeName" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="animalDietTypeDescription">Description</label>
+                                            <input type="text" name="animalDietTypeDescription" id="animalDietTypeDescription" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+                                            <label for="animalDietTypeSchedule">Eating Schedule</label>
+                                            <input type="text" name="animalDietTypeSchedule" id="animalDietTypeSchedule" value="" class="text ui-widget-content ui-corner-all" />
+                                            <br>
+
+                                        </fieldset>
+                                    </form>
+                                </div>
+
                             </div>
 
                         </div>

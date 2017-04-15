@@ -1,4 +1,4 @@
-function deleteAnimalType(animals){
+/*function deleteAnimalType(animals){
     var id = {
         'Animal Type ID': animals.id
     };
@@ -19,7 +19,7 @@ function deleteAnimalType(animals){
         });
     }
 
-}
+} */
 
 
 
@@ -35,6 +35,19 @@ function reloadAnimalTypeTable(){
     });
 }
 
+function initializeInsertAnimalTypeFields(){
+    $("#animalTypeName").val("");
+    $("#animalTypeDescription").val("");
+
+
+
+
+    $("#type-form-insert").dialog("open");
+    $("#animalsTable").tablesorter();
+
+}
+
+
 function CreateAnimalTypeJSONTable(oneData) {
     // EXTRACT VALUE FOR HTML HEADER.
     var col = [];
@@ -45,7 +58,7 @@ function CreateAnimalTypeJSONTable(oneData) {
             }
         }
     }
-    col.push("Actions")
+    col.push("")
 
     // CREATE DYNAMIC TABLE.
     var table = document.createElement("table");
@@ -80,7 +93,7 @@ function CreateAnimalTypeJSONTable(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteAnimalType(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        //tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteAnimalType(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
 
     //delete previous table
@@ -95,14 +108,59 @@ function CreateAnimalTypeJSONTable(oneData) {
     $("#animalsTable").tablesorter();
 }
 
+function insertAnimalType(){
+
+    var entry;
+
+
+
+    {
+        entry = {
+            'Name': $("#animalTypeName").val(),
+            'Description': $("#animalTypeDescription").val(),
+        };
+    }
+
+    $.ajax({
+        url: "/addAnimalType",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(entry),
+        complete: function (animals) {
+            $('#output').html(animals.responseText);
+            reloadAnimalTypeTable();
+        }
+    });
+
+    $("#type-form-insert").dialog("close");
+}
 
 
 $(document).ready(function(){
 
+    $("#type-form-insert").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Submit": function () {
 
+                insertAnimalType();
 
+                $(this).dialog("close");
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () { }
+    });
 
-    reloadAnimalTypeTable();
+    setTimeout(function(){
+        reloadAnimalTypeTable();
+    },400);
 
     $('#animals-name').keyup(function() {
         var $rows = $('#animalsTable tbody  tr');
