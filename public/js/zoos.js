@@ -4,25 +4,24 @@ $(document).ready(function(){
 
     setTimeout(function(){
         $.ajax({
-            url: "/getAllExhibit",
+            url: "/getAllZoos",
             type: "POST",
             contentType: "application/json",
             processData: false,
             complete: function (data) {
-                var allExhibit = JSON.parse(data.responseText)
-                var description = allExhibit[0]['Description'];
+                var allZoos = JSON.parse(data.responseText)
+                var description = allZoos[0]['Name'];
                 seriesLabel.push(description);
-                allExhibit.forEach(function(element){
+                allZoos.forEach(function(element){
                     var id = {
-                        'Exhibit ID': element['Exhibit ID']
+                        'Zoo ID': element['Zoo ID']
                     };
-                   document.getElementById("cardsContainer").innerHTML += '<div class="flip3D"> <div class="back">Box 1 - Back</div><div class="front">Box 1 - Front</div> </div>'
+                   document.getElementById("cardsContainer").innerHTML += '<div class="flip3D"> <div class="back">Box 1 - Back</div><div class="front">Zoo Name</div> </div>'
 
-                    console.log(element['Description'])
+                    console.log(element['Name'])
                 }, this)
             }
         });
     }, 300);
-
 
 });
