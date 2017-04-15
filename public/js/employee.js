@@ -21,8 +21,6 @@ function deleteEntry(element){
 
 }
 
-var initialSalaryOfEditedEmployee;
-
 function initializeEditEntry(element){
     var id = {
           'Employee ID': element.id
@@ -35,9 +33,6 @@ function initializeEditEntry(element){
         data: JSON.stringify(id),
         complete: function (data) {
             var employeeInfo = JSON.parse(data.responseText);
-
-            initialSalaryOfEditedEmployee = employeeInfo[0]['Salary'];
-
             //insert employee info into inputs so user can edit.
             $("#editedUserID").val(employeeInfo[0]['Employee ID'])           
             $("#editFirstName").val(employeeInfo[0]['First Name']);
@@ -281,12 +276,6 @@ function insertEmployee(){
     var nullValue = null;
 
 
-    var salaryMinimum = $("#salary").val();
-    if(salaryMinimum < 7.25){
-        alert("Minimum salary must be 7.25! Automatically setting to 7.25")
-        salaryMinimum = 7.25;
-    }
-
     if(shop.options[shop.selectedIndex].id === '' && enclosure.options[enclosure.selectedIndex].id === ''){
         entry = {
             'Zoo ID': 1,
@@ -297,7 +286,7 @@ function insertEmployee(){
             'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
             'Shifts': $("#shift").val(),
-            'Salary': salaryMinimum
+            'Salary': $("#salary").val()
         };
     }
     else if (shop.options[shop.selectedIndex].id === ''){
@@ -310,7 +299,7 @@ function insertEmployee(){
             'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
             'Shifts': $("#shift").val(),
-            'Salary': salaryMinimum
+            'Salary': $("#salary").val()
         };
     }
     else if(enclosure.options[enclosure.selectedIndex].id === ''){
@@ -323,7 +312,7 @@ function insertEmployee(){
             'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
             'Shifts': $("#shift").val(),
-            'Salary': salaryMinimum
+            'Salary': $("#salary").val()
         };
     }
     else{
@@ -336,7 +325,7 @@ function insertEmployee(){
             'Job Desciption': $("#jobDescription").val(),
             'Hire Date': today,
             'Shifts': $("#shift").val(),
-            'Salary': salaryMinimum
+            'Salary': $("#salary").val()
         };
     }
 
@@ -353,7 +342,7 @@ function insertEmployee(){
     });
 
     $("#dialog-form-insert").dialog("close");    
-    document.getElementById('topPage').scrollIntoView();
+    document.getElementById('output').scrollIntoView();
 }
 
 $(document).ready(function(){
@@ -371,11 +360,40 @@ $(document).ready(function(){
 
                 var nullValue = null;
 
-                if($("#editSalary").val() < initialSalaryOfEditedEmployee){
-                    alert("You cannot decrease employee salary!");
+                if(shop.options[shop.selectedIndex].id === '' && enclosure.options[enclosure.selectedIndex].id === ''){
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Enclosure ID': nullValue,
+                        'Shop ID': nullValue,                                    
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
+                }
+                else if (shop.options[shop.selectedIndex].id === ''){
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
+                        'Shop ID': nullValue,                                    
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
+                }
+                else if(enclosure.options[enclosure.selectedIndex].id === ''){                    
+                    entry = {
+                        'First Name': $("#editFirstName").val(),
+                        'Last Name': $("#editLastName").val(),
+                        'Shop ID': shop.options[shop.selectedIndex].id,
+                        'Enclosure ID': nullValue,                                    
+                        'Job Desciption': $("#editJobDescription").val(),
+                        'Shifts': $("#editShift").val(),
+                        'Salary': $("#editSalary").val()
+                    };
                 }
                 else{
-<<<<<<< HEAD
                     entry = {
                         'First Name': $("#editFirstName").val(),
                         'Last Name': $("#editLastName").val(),
@@ -396,70 +414,13 @@ $(document).ready(function(){
                         $('#output').html(data.responseText);
                         console.log(entry)
 
-=======
+                    }
+                });
+                
+                reloadEmployeeTable(); 
 
-                    if(shop.options[shop.selectedIndex].id === '' && enclosure.options[enclosure.selectedIndex].id === ''){
-                        entry = {
-                            'First Name': $("#editFirstName").val(),
-                            'Last Name': $("#editLastName").val(),
-                            'Enclosure ID': nullValue,
-                            'Shop ID': nullValue,                                    
-                            'Job Desciption': $("#editJobDescription").val(),
-                            'Shifts': $("#editShift").val(),
-                            'Salary': $("#editSalary").val()
-                        };
-                    }
-                    else if (shop.options[shop.selectedIndex].id === ''){
-                        entry = {
-                            'First Name': $("#editFirstName").val(),
-                            'Last Name': $("#editLastName").val(),
-                            'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
-                            'Shop ID': nullValue,                                    
-                            'Job Desciption': $("#editJobDescription").val(),
-                            'Shifts': $("#editShift").val(),
-                            'Salary': $("#editSalary").val()
-                        };
-                    }
-                    else if(enclosure.options[enclosure.selectedIndex].id === ''){                    
-                        entry = {
-                            'First Name': $("#editFirstName").val(),
-                            'Last Name': $("#editLastName").val(),
-                            'Shop ID': shop.options[shop.selectedIndex].id,
-                            'Enclosure ID': nullValue,                                    
-                            'Job Desciption': $("#editJobDescription").val(),
-                            'Shifts': $("#editShift").val(),
-                            'Salary': $("#editSalary").val()
-                        };
-                    }
-                    else{
-                        entry = {
-                            'First Name': $("#editFirstName").val(),
-                            'Last Name': $("#editLastName").val(),
-                            'Shop ID': shop.options[shop.selectedIndex].id,                        
-                            'Enclosure ID': enclosure.options[enclosure.selectedIndex].id,
-                            'Job Desciption': $("#editJobDescription").val(),
-                            'Shifts': $("#editShift").val(),
-                            'Salary': $("#editSalary").val()
-                        };
->>>>>>> 2fc113a1389a650963c52178a5271b811d466599
-                    }
-                    $.ajax({
-                        url: "/editEmployeeByID/" + $("#editedUserID").val(),
-                        type: "POST",
-                        contentType: "application/json",
-                        processData: false,
-                        data: JSON.stringify(entry),
-                        complete: function (data) {
-                            $('#output').html(data.responseText);
-                        }
-                    });
-                    
-                    reloadEmployeeTable(); 
-
-                    $(this).dialog("close");
-                    reloadEmployeeTable();  
-                    document.getElementById('topPage').scrollIntoView();                
-                }               
+                $(this).dialog("close");
+                reloadEmployeeTable();                 
             },
             Cancel: function () {
                 $(this).dialog("close");

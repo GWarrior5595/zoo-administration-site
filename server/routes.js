@@ -30,6 +30,10 @@ module.exports = function(app, passport) {
     res.render("sales.html");
   });
 
+    app.get("/zoos", isLoggedIn, function(req,res){
+        res.render("zoos.html");
+    });
+
 
 
   // LOGOUT
@@ -447,9 +451,6 @@ module.exports = function(app, passport) {
         });
     });
 
-
-//zoos
-
     app.post('/getAllZoos', function(req, res){
         db.getAllZoos(function(err, data){
             if(err) {console.log("error"); return;}
@@ -459,6 +460,16 @@ module.exports = function(app, passport) {
             }
         })
     })
+
+    app.post('/addZoo', isLoggedIn, function(req, res){
+        db.insertEmployee(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('User added to database with ID: ' + data.insertId);
+            }
+        });
+    });
 
     app.post('/searchZooByID', function(req, res){
         db.getZooByID(req.body, function(err, data){
@@ -479,8 +490,6 @@ module.exports = function(app, passport) {
             }
         });
     });
-
-
 
 // AUTHENTICATE
   // show the login form
