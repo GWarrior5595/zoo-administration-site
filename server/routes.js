@@ -30,17 +30,7 @@ module.exports = function(app, passport) {
     res.render("sales.html");
   });
 
-<<<<<<< HEAD
-    app.get("/check", isLoggedIn, function(req,res){
-        res.render("check.html");
-    });
 
-
-=======
-  app.get("/zoos", isLoggedIn, function(req,res){
-    res.render("zoos.html");
-  });
->>>>>>> 2fc113a1389a650963c52178a5271b811d466599
 
   // LOGOUT
   app.get('/logout', function(req, res) {

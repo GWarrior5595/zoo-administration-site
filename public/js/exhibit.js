@@ -1,4 +1,4 @@
-function deleteExhibit(exhibit){
+/*function deleteExhibit(exhibit){
     var id = {
         'Exhibit ID': exhibit.id
     };
@@ -19,7 +19,7 @@ function deleteExhibit(exhibit){
         });
     }
 
-}
+}*/
 
 
 
