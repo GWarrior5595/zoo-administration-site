@@ -30,8 +30,8 @@ module.exports = function(app, passport) {
     res.render("sales.html");
   });
 
-  app.get("/page4", isLoggedIn, function(req,res){
-    res.render("page4.html");
+  app.get("/zoos", isLoggedIn, function(req,res){
+    res.render("zoos.html");
   });
 
   // LOGOUT
@@ -330,6 +330,40 @@ module.exports = function(app, passport) {
             }
         })
     })
+
+
+//zoos
+
+    app.post('/getAllZoos', function(req, res){
+        db.getAllZoos(function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        })
+    })
+
+    app.post('/searchZooByID', function(req, res){
+        db.getZooByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/deleteZoo', function(req, res){
+        db.deleteZooByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Zoo deleted from database');
+            }
+        });
+    });
+
 
 
 // AUTHENTICATE

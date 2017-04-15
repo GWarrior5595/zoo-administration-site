@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <script type="text/javascript" src="js/zoos.js"></script>
+    <script type="text/javascript" src="js/animal.js"></script>
+    <script type="text/javascript" src="js/exhibit.js"></script>
+    <script type="text/javascript" src="js/enclosure.js"></script>
+    <script type="text/javascript" src="js/dietType.js"></script>
+    <script type="text/javascript" src="js/animalType.js"></script>
+
+
+    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
+
+
+
+    <script src="js/jquery.tablesorter.min.js"></script>
+
+    <link href="stylesheets/main.css" rel="stylesheet" />
+
+    <script>
+        $( function() {
+            $( "#tabs" ).tabs();
+            $("#nav-placeholder").load("/navbar");
+        } );
+    </script>
+
+
+
+    <link href="stylesheets/main.css" rel="stylesheet" />
+    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
+
+</head>
+<body>
+<div id="wrapper">
+    <div id="nav-placeholder"></div>
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div id="tabs">
+                        <ul>
+                            <li><a href="#tabs-1">Exhibits</a></li>
+                            <li><a href="#tabs-2">Enclosures</a></li>
+                            <li><a href="#tabs-3">Animals</a></li>
+                            <li><a href="#tabs-4">Animals Type</a></li>
+                            <li><a href="#tabs-5">Animals Diet Type</a></li>
+                        </ul>
+                        <div id="tabs-1">
+                            <div class='card'>
+                                <div class='header'>
+                                    <h3 class='title'> Exhibits</h3>
+                                    Search: <input id="exhibit-name" type="text"/>
+                                    <div id="showExhibit" class="table-responsive"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div id="tabs-2">
+
+
+                            <div class='card'>
+                                <div class='header'>
+                                    <h3 class='title'> Enclosures</h3>
+                                    Search: <input id="enclosure-name" type="text"/>
+                                    <div id="showEnclosure" class="table-responsive"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="tabs-3">
+
+                            <div class='card'>
+                                <div class='header'>
+                                    <h3 class='title'> Animals</h3>
+                                    Search: <input id="animal-name" type="text"/>
+                                    <div id="showAnimal" class="table-responsive"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="tabs-4">
+
+                            <div class='card'>
+                                <div class='header'>
+                                    <h3 class='title'> Animal Types</h3>
+                                    Search: <input id="animals-name" type="text"/>
+                                    <div id="showAnimalType" class="table-responsive"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="tabs-5">
+                            <div class='header'>
+                                <h3 class='title'> Animal Diet Types</h3>
+                                Search: <input id="diet-name" type="text"/>
+                                <div id="showDiet" class="table-responsive"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+</body>
+</html>
