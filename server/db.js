@@ -571,6 +571,7 @@ deleteAnimalDietTypesByID = function(data, callback){
 module.exports.deleteAnimalDietTypesByID = deleteAnimalDietTypesByID
 
 
+<<<<<<< HEAD
 getIDAndNameOfExhibit = function(callback){
     var sql = "SELECT `Exhibit ID`, `Description` "
             + "FROM exhibit";
@@ -687,12 +688,30 @@ insertExhibit = function(data, callback){
         if(err) { console.log(err); callback(true); return; }
         // make the query
         connection.query(sql, data, function(err, results) {
+=======
+
+
+
+
+
+//Zoos tab
+
+getAllZoos = function(callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "SELECT * FROM `zoo`"
+      
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, function(err, results) {
+>>>>>>> 2fc113a1389a650963c52178a5271b811d466599
             connection.release();
             if(err) { console.log(err); callback(true); return; }
             callback(false, results);
         });
     });
 }
+<<<<<<< HEAD
 
 module.exports.insertExhibit = insertExhibit
 
@@ -719,12 +738,26 @@ getEnclosureByID = function(data, callback) {
         if(err) { console.log(err); callback(true); return; }
         // make the query
         connection.query(sql, data["Enclosure"], function(err, results) {
+=======
+module.exports.getAllZoos = getAllZoos
+
+
+
+getZooByID = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "SELECT * from zoo WHERE `Zoo ID`=?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data["Zoo ID"], function(err, results) {
+>>>>>>> 2fc113a1389a650963c52178a5271b811d466599
             connection.release();
             if(err) { console.log(err); callback(true); return; }
             callback(false, results);
         });
     });
 }
+<<<<<<< HEAD
 module.exports.getEnclosureByID = getEnclosureByID
 
 
@@ -735,11 +768,29 @@ editEnclosureByID = function(data, id, callback){
         if(err) { console.log(err); callback(true); return; }
         // make the query
         connection.query(sql, [data, id], function(err, results) {
+=======
+module.exports.getZooByID = getZooByID
+
+
+
+deleteZoo = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "DELETE from zoo "
+        + "WHERE `Zoo ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Diet Type ID'], function(err, results) {
+>>>>>>> 2fc113a1389a650963c52178a5271b811d466599
             connection.release();
             if(err) { console.log(err); callback(true); return; }
             callback(false, results);
         });
     });
 }
+<<<<<<< HEAD
 
 module.exports.editEnclosureByID = editEnclosureByID
+=======
+module.exports.getZooByID = getZooByID
+>>>>>>> 2fc113a1389a650963c52178a5271b811d466599
