@@ -21,17 +21,19 @@ $(document).ready(function(){
                                             //back 
                                          += "<div class='flip3D'>"
                                             + "<div class='back'>"
-                                                    +"<b>Information: </b><br>" + element['Street Address'] + "<br>"
+                                                    +"<font size='+1'><b>  Information: </font></b><br>" 
+                                                    + element['Street Address'] + "<br>"
                                                     + " " + element['City'] + ", " + element['State'] + " " + element['Zip Code']
                                                     + "<br>" + element["Phone"] 
                                                     + "<br>" + element['Operation Hours']
                                             + "</div>"
                                             
                                             //front
-                                            + "<div class='front'><p>" 
-                                                    + "Zoo ID: " + element['Zoo ID'] 
-                                                    + "<br>" 
-                                                    + "Zoo name: " + element['Name'] + "</p></div>"
+                                            + "<div class='front'><p> "
+                                                    + "<br><br><center><font size='+3'>" + "<b>" + element['Name'] + "</b></font></center>"                                        
+                                                    + "<center><font size='+1'>Zoo ID: " + element['Zoo ID'] + "</font></center></p></div>"
+                                                    
+                                               
                                          + "</div>"
 
 
