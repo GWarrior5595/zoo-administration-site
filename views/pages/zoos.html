@@ -1,53 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/zoos.js"></script>
-    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
-    <script src="js/jquery.tablesorter.min.js"></script>
-    <link href="stylesheets/main.css" rel="stylesheet" />
-     <link href="stylesheets/flip.css" rel="stylesheet" />
-
-    <script>
-        $( function() {
-            $( "#tabs" ).tabs();
-            $("#nav-placeholder").load("/navbar");
-        } );
-    </script>
-
-
-
-    <link href="stylesheets/main.css" rel="stylesheet" />
-    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
-
-</head>
-<body>
-<div id="wrapper">
-    <div id="nav-placeholder"></div>
-    <div id="page-wrapper" >
-        <div id="page-inner">
-            <div class="row">
-                <div class="col-md-12">
-
-
-                                   
-                                    <!--flip card-->
 <!DOCTYPE html>
 <html>
 <head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="js/zoos.js"></script>
+    <script src="js/jquery.tablesorter.min.js"></script>
+    <script>
+      $(function(){
+          $("#nav-placeholder").load("/navbar"); 
+      });
+    </script>
+    
+    <link href="stylesheets/main.css" rel="stylesheet" />
+    
+    <link href="stylesheets/tablesorter.css" rel="stylesheet" />
+    </head>
 <style>
 .flip3D{ width:240px; height:200px; margin:10px; float:left; }
 .flip3D > .front{
 	position:absolute;
 	-webkit-transform: perspective( 600px ) rotateY( 0deg );
 	transform: perspective( 600px ) rotateY( 0deg );
-	background:#80BFFF; width:240px; height:200px; border-radius: 7px;
+	background:#FC6; width:240px; height:200px; border-radius: 7px;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 	transition: -webkit-transform .5s linear 0s;
@@ -57,7 +34,7 @@
 	position:absolute;
 	-webkit-transform: perspective( 600px ) rotateY( 180deg );
 	transform: perspective( 600px ) rotateY( 180deg );
-	background: #FFFF99; width:240px; height:200px; border-radius: 7px;
+	background: #80BFFF; width:240px; height:200px; border-radius: 7px;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 	transition: -webkit-transform .5s linear 0s;
@@ -72,38 +49,21 @@
 	transform: perspective( 600px ) rotateY( 0deg );
 }
 </style>
-</head>
 <body>
-<div class="flip3D">
-  <div class="back">Box 1 - Back</div>
-  <div class="front">Box 1 - Front</div>
-</div>
-<div class="flip3D">
-  <div class="back">Box 2 - Back</div>
-  <div class="front">Box 2 - Front</div>
-</div>
-<div class="flip3D">
-  <div class="back">Box 3 - Back</div>
-  <div class="front">Box 3 - Front</div>
-</div>
-</body>
-</html>
-
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                        
-                        </div>
-                    </div>
-
-                </div>
+<div id="wrapper">
+    <div id="nav-placeholder"></div>
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                   <h3 class='title'> Zoo List</h3>
+                   <div id="cardsContainer"></div>
             </div>
-            <hr />
         </div>
+        <hr />
     </div>
 </div>
+</div>
+
 </body>
 </html>
