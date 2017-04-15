@@ -16,9 +16,18 @@ $(document).ready(function(){
                     var id = {
                         'Zoo ID': element['Zoo ID']
                     };
-                                         document.getElementById("cardsContainer").innerHTML 
+//flip card
+                                         document.getElementById("cardsContainer").innerHTML
+                                            //back 
                                          += "<div class='flip3D'>"
-                                            + "<div class='back'>Box 1 - Back</div>"
+                                            + "<div class='back'>"
+                                                    +"<b>Information: </b><br>" + element['Street Address'] + "<br>"
+                                                    + " " + element['City'] + ", " + element['State'] + " " + element['Zip Code']
+                                                    + "<br>" + element["Phone"] 
+                                                    + "<br>" + element['Operation Hours']
+                                            + "</div>"
+                                            
+                                            //front
                                             + "<div class='front'><p>" 
                                                     + "Zoo ID: " + element['Zoo ID'] 
                                                     + "<br>" 
