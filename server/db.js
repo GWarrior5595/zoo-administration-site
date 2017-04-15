@@ -601,7 +601,7 @@ module.exports.deleteAnimalDietTypesByID = deleteAnimalDietTypesByID
 
 getAllZoos = function(data, callback) {
     //we have to use backticks " ` " when wanting to select columns with spaces in their name
-    var sql = "SELECT * from zoo WHERE `Zoo ID` IS NOT NULL"
+    var sql = "SELECT * from zoo"
     pool.getConnection(function(err, connection) {
         if(err) { console.log(err); callback(true); return; }
         // make the query
