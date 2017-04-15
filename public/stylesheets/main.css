@@ -114,6 +114,12 @@ body {
   height: 500px;
 }
 
+#navbar-title {
+    font-size: 20px;
+    padding-top: 25px;
+    color: white
+}
+
 /*==============================================
     MEDIA QUERIES     
     =============================================*/
