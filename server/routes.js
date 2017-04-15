@@ -392,6 +392,66 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/addAnimalType', isLoggedIn, function(req, res){
+        db.insertAnimalType(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal Type added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addAnimalDietType', isLoggedIn, function(req, res){
+        db.insertAnimalDietType(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Animal Diet Type added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addExhibit', isLoggedIn, function(req, res){
+        db.insertExhibit(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Exhibit added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/addEnclosure', isLoggedIn, function(req, res){
+        db.insertEnclosure(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send('Enclosure added to database with ID: ' + data.insertId);
+            }
+        });
+    });
+
+    app.post('/searchEnclosureByID', function(req, res){
+        db.getEnclosureByID(req.body, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                //format data in here
+                res.send(data);
+            }
+        });
+    });
+
+    app.post('/editEnclosureByID/:id', isLoggedIn, function(req, res){
+        db.editEnclosureByID(req.body, req.params.id, function(err, data){
+            if(err) {console.log("error"); return;}
+            else{
+                res.send('Enclosure edited to database');
+            }
+        });
+    });
+
+
 // AUTHENTICATE
   // show the login form
   app.get('/login', function(req, res) {

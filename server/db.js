@@ -334,24 +334,6 @@ getTotalOrderNumberFromDateByShopID = function(data, callback){
 
 module.exports.getTotalOrderNumberFromDateByShopID = getTotalOrderNumberFromDateByShopID
 
-// getTotalOrderNumberFromDateByShopTypeID = function(data, callback){
-//   var sql = "SELECT DISTINCT COUNT(orders.`Payment Amount`) as `Total Orders` "
-//             + "FROM orders, shop "
-//             + "WHERE orders.`Shop ID` = shop.`Shop ID` "
-// 		        + "AND shop.`Shop Type ID` = ? AND DATE(orders.Date) BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE() "
-
-//   pool.getConnection(function(err, connection) {
-//     if(err) { console.log(err); callback(true); return; }
-//     // make the query
-//     connection.query(sql, [data['Shop Type ID'], data['Time']], function(err, results) {
-//       connection.release();
-//       if(err) { console.log(err); callback(true); return; }
-//       callback(false, results);
-//     });
-//   });
-// }
-
-// module.exports.getTotalOrderNumberFromDateByShopTypeID = getTotalOrderNumberFromDateByShopTypeID
 
 getTotalRevenueFromDateByShopTypeID = function(data, callback){
   var sql = "SELECT DISTINCT SUM(orders.`Payment Amount`) as `Revenue`, type.`Type` "
@@ -405,41 +387,7 @@ getAllAnimal = function(callback){
             + "WHERE animals.`Exhibit ID` = exhibit.`Exhibit ID` AND animals.`Diet Type ID` = `diet type`.`Diet Type ID` AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
 
             + "Order By `Animal ID` "
-   /* var sql = "SELECT DISTINCT animals.`Animal ID`, exhibit.`Description` as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender`"
-            + "FROM animals, exhibit, `diet type`, `animal type` "
-            + "WHERE animals.`Diet Type ID` = `diet type`.`Diet Type ID` "
-            + "AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
-            + "AND animals.`Exhibit ID` = exhibit.`Exhibit ID` "
 
-            + "UNION ALL"
-
-            + "SELECT DISTINCT animals.`Animal ID`, exhibit.`Description` as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, '' as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender` "
-            + "FROM animals, exhibit, `animal type` "
-            + "WHERE animals.`Exhibit ID` = exhibit.`Exhibit ID` "
-            + "AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
-            + "AND animals.`Diet Type ID` IS NULL "
-
-            + "UNION ALL"
-
-            + "SELECT DISTINCT animals.`Animal ID`, exhibit.`Description` as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, '' as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender` "
-            + "FROM animals, exhibit, `diet type` "
-            + "WHERE animals.`Diet Type ID` = `diet type`.`Diet Type ID` "
-            + "AND animals.`Exhibit ID` = exhibit.`Exhibit ID` "
-            + "AND animals.`Animal Type ID` IS NULL "
-
-            + "UNION ALL"
-
-            + "SELECT DISTINCT animals.`Animal ID`, exhibit.`Description` as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender`"
-            + "FROM animals, exhibit, `diet type`, `animal type` "
-            + "WHERE animals.`Exhibit ID` IS NOT NULL AND animals.`Diet Type ID` IS NOT NULL AND animals.`Animal Type ID` IS NOT NULL AND animals.`Exhibit ID` = exhibit.`Exhibit ID` AND `animals.`Diet Type ID` = `diet type`.`Diet Type ID` AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
-
-             + "UNION ALL"
-
-            + "SELECT DISTINCT animals.`Animal ID`, '' as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, '' as `Diet Type`, '' as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender` "
-            + "FROM animals, exhibit, `diet type`, `animal type` "
-            + "WHERE animals.`Exhibit ID` IS NULL AND animals.`Diet Type ID` IS NULL AND animals.`Animal Type ID` IS NULL "
-
-            + "ORDER BY `Animal ID` " */
 
     pool.getConnection(function(err, connection) {
         if(err) { console.log(err); callback(true); return; }
@@ -453,25 +401,6 @@ getAllAnimal = function(callback){
 }
 
 module.exports.getAllAnimal =  getAllAnimal
-
-
-    /*var sql = "Select animals.`Animal ID`, exhibit.Description as `Exhibit Name`, animals.`Name` as `Animal Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, `animal type`.`Name` as `Animal Type`, animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender`"
-        + "FROM animals, exhibit, `diet type`, `animal type` "
-        + "WHERE animals.`Exhibit ID` = exhibit.`Exhibit ID` AND animals.`Diet Type ID` = `diet type`.`Diet Type ID` AND animals.`Animal Type ID` = `animal type`.`Animal Type ID` "
-
-        + "Order By `Animal ID` "*/
-    /*"SELECT DISTINCT employee.`Employee ID`, employee.`First Name`, employee.`Last Name`, '' as `Enclosure Name`, shop.`Name` as `Shop Name`, employee.`Job Desciption`, DATE_FORMAT(employee.`Hire Date`, '%m/%d/%Y') as `Hire Date`, employee.`Shifts`, employee.`Salary` "
-     + "FROM employee, shop "
-     + "WHERE employee.`Shop ID` = shop.`Shop ID` "
-     + "AND employee.`Enclosure ID` IS NULL "*/
-    /* "Select DISTINCT animals.`Animal ID`, '' as `Exhibit Name`, animals.`Name`, animals.`Description`, `diet type`.`Name` as `Diet Type`, '' as `Animal Type` , animals.`Age`, animals.`Weight`, animals.`Height`, animals.`Gender` "
-     + "FROM animals, ``diet type` "
-     + "WHERE animals.`Diet Type ID` = `diet type`.`Diet Type ID` "
-     + "AND animals.`Exhibit ID` is NULL "
-     + "AND animals.`Animal Type ID` is NULL "*/
-
-
-
 
 getAnimalByID = function(data, callback) {
     //we have to use backticks " ` " when wanting to select columns with spaces in their name
@@ -508,6 +437,8 @@ getAllExhibit = function(callback){
     var sql = "SELECT exhibit.`Exhibit ID`, exhibit.`Description`"
         +"FROM `Exhibit`;"
 
+
+
     pool.getConnection(function(err, connection) {
         if(err) { console.log(err); callback(true); return; }
         // make the query
@@ -542,6 +473,9 @@ getAllEnclosure = function(callback){
         +"FROM enclosure, exhibit "
         +"WHERE enclosure.`Exhibit ID` = exhibit.`Exhibit ID`;"
 
+
+
+
     pool.getConnection(function(err, connection) {
         if(err) { console.log(err); callback(true); return; }
         // make the query
@@ -557,11 +491,11 @@ module.exports.getAllEnclosure =  getAllEnclosure
 
 deleteEnclosureByID = function(data, callback){
     var sql = "DELETE from enclosure "
-        + "WHERE `Enclosure ID` = ?"
+        + "WHERE `Enclosure` = ?"
     pool.getConnection(function(err, connection) {
         if(err) { console.log(err); callback(true); return; }
         // make the query
-        connection.query(sql, data['Enclosure ID'], function(err, results) {
+        connection.query(sql, data['Enclosure'], function(err, results) {
             connection.release();
             if(err) { console.log(err); callback(true); return; }
             callback(false, results);
@@ -717,3 +651,95 @@ insertAnimal = function(data, callback){
 module.exports.insertAnimal = insertAnimal
 
 
+insertAnimalType = function(data, callback){
+    var sql = "INSERT INTO `animal type` SET ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.insertAnimalType = insertAnimalType
+
+insertAnimalDietType = function(data, callback){
+    var sql = "INSERT INTO `diet type` SET ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.insertAnimalDietType = insertAnimalDietType
+
+insertExhibit = function(data, callback){
+    var sql = "INSERT INTO exhibit SET ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.insertExhibit = insertExhibit
+
+
+insertEnclosure = function(data, callback){
+    var sql = "INSERT INTO enclosure SET ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data, function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.insertEnclosure = insertEnclosure
+
+getEnclosureByID = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "SELECT * from enclosure WHERE `Enclosure`=?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data["Enclosure"], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+module.exports.getEnclosureByID = getEnclosureByID
+
+
+editEnclosureByID = function(data, id, callback){
+    var sql = "UPDATE enclosure set ? WHERE `Enclosure` = ? "
+
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, [data, id], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+
+module.exports.editEnclosureByID = editEnclosureByID

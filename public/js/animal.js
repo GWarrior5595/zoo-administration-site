@@ -339,14 +339,13 @@ function insertAnimal(){
         data: JSON.stringify(entry),
         complete: function (animal) {
             $('#output').html(animal.responseText);
-            console.log(entry)
             reloadAnimalTable();
         }
     });
 
     $("#dialog-form-insert").dialog("close");
     document.getElementById('output').scrollIntoView();
-    console.log(scrollIntoView())
+
 }
 
 

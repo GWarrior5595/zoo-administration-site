@@ -23,6 +23,7 @@ function deleteExhibit(exhibit){
 
 
 
+
 function reloadExhibitTable(){
     $.ajax({
         url: "/getAllExhibit",
@@ -35,17 +36,29 @@ function reloadExhibitTable(){
     });
 }
 
+function initializeInsertExhibitFields(){
+    $("#exhibitDescription").val("");
+
+
+
+
+
+    $("#exhibit-form-insert").dialog("open");
+    $("#exhibitTable").tablesorter();
+
+}
+
 function CreateExhibitTableFromJSON(oneData) {
     // EXTRACT VALUE FOR HTML HEADER.
     var col = [];
     for (var i = 0; i < oneData.length; i++) {
         for (var key in oneData[i]) {
-            if (col.indexOf(key) === -1) {
+           if (col.indexOf(key) === -1) {
                 col.push(key);
             }
         }
     }
-    col.push("Actions")
+    col.push("")
 
     // CREATE DYNAMIC TABLE.
     var table = document.createElement("table");
@@ -80,7 +93,7 @@ function CreateExhibitTableFromJSON(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteExhibit(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+       // tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteExhibit(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
 
     //delete previous table
@@ -96,14 +109,61 @@ function CreateExhibitTableFromJSON(oneData) {
     $("#exhibitTable").tablesorter();
 }
 
+function insertExhibit(){
+
+    var entry;
+
+
+
+    {
+        entry = {
+            'Zoo ID': 1,
+            'Description': $("#exhibitDescription").val(),
+        };
+    }
+
+    $.ajax({
+        url: "/addExhibit",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(entry),
+        complete: function (exhibit) {
+            $('#output').html(exhibit.responseText);
+            reloadExhibitTable();
+        }
+    });
+
+    $("#exhibit-form-insert").dialog("close");
+
+}
+
 
 
 $(document).ready(function(){
 
+    $("#exhibit-form-insert").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Submit": function () {
 
+                insertExhibit();
 
+                $(this).dialog("close");
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () { }
+    });
 
-    reloadExhibitTable();
+    setTimeout(function(){
+        reloadExhibitTable();
+    },400);
 
     $('#exhibit-name').keyup(function() {
         var $rows = $('#exhibitTable tbody  tr');

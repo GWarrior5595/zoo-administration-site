@@ -72,6 +72,11 @@ body {
 .nav > li > a > i {
     margin-right:10px;
 }
+
+div#tabs{
+    width: auto;
+}
+
 .logout-spn {
     float:right;
     color:#fff;

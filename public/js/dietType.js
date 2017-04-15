@@ -1,4 +1,4 @@
-function deleteDiet(diet){
+/*function deleteDiet(diet){
     var id = {
         'Diet Type ID': diet.id
     };
@@ -20,7 +20,7 @@ function deleteDiet(diet){
     }
 
 }
-
+*/
 
 
 function reloadAnimalDietTypeTable(){
@@ -35,6 +35,19 @@ function reloadAnimalDietTypeTable(){
     });
 }
 
+function initializeInsertAnimalDietTypeFields(){
+    $("#animalDietTypeName").val("");
+    $("#animalDietTypeDescription").val("");
+    $("#animalDietTypeSchedule").val("");
+
+
+
+
+    $("#diet-form-insert").dialog("open");
+    $("#dietTable").tablesorter();
+
+}
+
 function CreateDietTableFromJSON(oneData) {
     // EXTRACT VALUE FOR HTML HEADER.
     var col = [];
@@ -45,7 +58,7 @@ function CreateDietTableFromJSON(oneData) {
             }
         }
     }
-    col.push("Actions")
+    col.push("")
 
     // CREATE DYNAMIC TABLE.
     var table = document.createElement("table");
@@ -80,7 +93,7 @@ function CreateDietTableFromJSON(oneData) {
         var tabcelldelete = tr.insertCell(-1);
         var tabcelledit = tr.insertCell(-1);
         //tabcelldelete.innerHTML = "<button type='button' id='" + rowID + "' onclick='deleteEntry(this)' style='color: red'> X </button><br>";
-        tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteDiet(this)' class='table-remove glyphicon glyphicon-remove'></span>"
+        //tabcelldelete.innerHTML = "<span id='" + rowID +"' onclick='deleteDiet(this)' class='table-remove glyphicon glyphicon-remove'></span>"
     }
 
     //delete previous table
@@ -95,14 +108,62 @@ function CreateDietTableFromJSON(oneData) {
     $("#dietTable").tablesorter();
 }
 
+function insertAnimalDietType(){
+
+    var entry;
+
+
+
+    {
+        entry = {
+            'Name': $("#animalDietTypeName").val(),
+            'Description': $("#animalDietTypeDescription").val(),
+            'Eating Schedule': $("#animalDietTypeSchedule").val(),
+        };
+    }
+
+    $.ajax({
+        url: "/addAnimalDietType",
+        type: "POST",
+        contentType: "application/json",
+        processData: false,
+        data: JSON.stringify(entry),
+        complete: function (diet) {
+            $('#output').html(diet.responseText);
+            reloadAnimalDietTypeTable();
+        }
+    });
+
+    $("#diet-form-insert").dialog("close");
+
+}
+
 
 
 $(document).ready(function(){
 
+    $("#diet-form-insert").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 300,
+        modal: true,
+        buttons: {
+            "Submit": function () {
 
+                insertAnimalDietType();
 
+                $(this).dialog("close");
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function () { }
+    });
 
-    reloadAnimalDietTypeTable();
+    setTimeout(function(){
+        reloadAnimalDietTypeTable();
+    },400);
 
     $('#diet-name').keyup(function() {
         var $rows = $('#dietTable tbody  tr');
