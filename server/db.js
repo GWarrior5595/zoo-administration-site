@@ -590,3 +590,61 @@ deleteAnimalDietTypesByID = function(data, callback){
 }
 
 module.exports.deleteAnimalDietTypesByID = deleteAnimalDietTypesByID
+
+
+
+
+
+
+
+//Zoos tab
+
+getAllZoos = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "SELECT * from zoo WHERE `Zoo ID` IS NOT NULL"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data["Zoo ID"], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+module.exports.getAllZoos = getAllZoos
+
+
+
+getZooByID = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "SELECT * from zoo WHERE `Zoo ID`=?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data["Zoo ID"], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+module.exports.getZooByID = getZooByID
+
+
+
+deleteZoo = function(data, callback) {
+    //we have to use backticks " ` " when wanting to select columns with spaces in their name
+    var sql = "DELETE from zoo "
+        + "WHERE `Zoo ID` = ?"
+    pool.getConnection(function(err, connection) {
+        if(err) { console.log(err); callback(true); return; }
+        // make the query
+        connection.query(sql, data['Diet Type ID'], function(err, results) {
+            connection.release();
+            if(err) { console.log(err); callback(true); return; }
+            callback(false, results);
+        });
+    });
+}
+module.exports.getZooByID = getZooByID
