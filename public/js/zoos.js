@@ -16,7 +16,17 @@ $(document).ready(function(){
                     var id = {
                         'Zoo ID': element['Zoo ID']
                     };
-                   document.getElementById("cardsContainer").innerHTML += '<div class="flip3D"> <div class="back">Box 1 - Back</div><div class="front">Zoo Name</div> </div>'
+                                         document.getElementById("cardsContainer").innerHTML 
+                                         += "<div class='flip3D'>"
+                                            + "<div class='back'>Box 1 - Back</div>"
+                                            + "<div class='front'><p>" 
+                                                    + "Zoo ID: " + element['Zoo ID'] 
+                                                    + "<br>" 
+                                                    + "Zoo name: " + element['Name'] + "</p></div>"
+                                         + "</div>"
+
+//samad's
+//                   document.getElementById("cardsContainer").innerHTML += "<div class='col-lg-6 col-sm-6'> <div class='card'><a href='enclosure' class='fill-div'><div class='content'> <div class='row'> <div class='col-xs-5'> <div class='icon-big icon-warning text-center'> <i class='ti-linux'></i> </div> </div> <div class='col-xs-7'> <div class='exhibit'> <p>" + element['Description'] + "</p>  </div> </div> </div> </div> </div></a>
 
                     console.log(element['Name'])
                 }, this)
